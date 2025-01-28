@@ -1,0 +1,37 @@
+:root {
+  --main-background-color: #202020;
+  --accent-color: #361471;
+  --accent-background-color: #EAE4F5;
+  --white-color: #FFFFFF;
+  --black-color: #000000;
+  --light-grey: #9C9C9C;
+  --dark-grey: #464646;
+
+  --default-spacing: 7vw;
+
+  --base-font: 'Nunito';
+  --accent-font: 'Raleway';
+
+}
+
+body{
+  overflow-x: hidden;
+}
+
+section{
+  height: fit-content;
+}
+
+button{
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  text-decoration: none;
+  border: none;
+  transition: all 0.3s;
+  font-family: var(--base-font);
+}
+
+button:hover{
+  transform: scale(1.05);
+}

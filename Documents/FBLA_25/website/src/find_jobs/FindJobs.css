@@ -1,0 +1,40 @@
+.find-jobs{
+    background-color: var(--main-background-color);
+}
+
+.find-jobs-hero{
+    background-color: var(--accent-background-color);
+    padding: 5% var(--default-spacing);
+}
+
+.find-jobs-hero h1{
+    color: var(--accent-color);
+    font-family: var(--accent-font);
+    margin: 0;
+}
+
+.find-jobs-hero p{
+    color: var(--light-grey);
+    margin: 0;
+    padding-bottom: 2rem;
+}
+
+.find-jobs-hero-bottom{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.find-jobs-hero-bottom input{
+    width: 100%;
+    font-size: 2rem;
+    padding: 1rem 0.5rem;
+    border: none;
+}
+
+.search-icon{
+    font-size: 1.5rem;
+    background-color: var(--white-color);
+    padding: 1.43rem 1rem;
+    border: none;
+}

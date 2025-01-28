@@ -1,0 +1,36 @@
+.navbar-home{
+    display: flex;
+    padding: 0.5rem var(--default-spacing);
+    justify-content: space-between;
+}
+
+.navbar-left{
+    width: fit-content;
+    align-items: center;
+}
+
+.navbar-left img{
+    width: 70px;
+}
+
+.navbar-center{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-link{
+    text-decoration: none;
+    color: var(--light-grey);
+}
+
+.navbar-right{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.navbar-right-button{
+    background-color: var(--accent-color);
+    color: var(--white-color);
+}

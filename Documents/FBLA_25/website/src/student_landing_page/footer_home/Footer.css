@@ -1,0 +1,80 @@
+/* Footer Styles */
+.footer {
+    background-color: var(--black-color);
+    color: var(--black-color);
+    padding: 20px var(--default-spacing);
+}
+
+.footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-section {
+    min-width: 150px;
+}
+
+.footer-logo {
+    height: 50px;
+}
+
+.footer-heading {
+    color: var(--white-color);
+    font-family: var(--accent-font);
+}
+
+.footer-text {
+    color: var(--light-grey);
+}
+
+.footer-subheading {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--white-color);
+    margin-bottom: 8px;
+    border-bottom: 1px solid #555;
+    padding-bottom: 4px;
+}
+
+.footer-links {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+.footer-links li {
+margin: 6px 0;
+}
+
+.footer-links a {
+text-decoration: none;
+color: #fff;
+transition: color 0.3s;
+}
+
+.footer-links a:hover {
+color: #aaa;
+}
+
+.footer-bottom {
+border-top: 1px solid #555;
+margin-top: 20px;
+padding-top: 10px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-size: 12px;
+color: #bbb;
+}
+
+.footer-bottom a {
+text-decoration: none;
+color: #bbb;
+transition: color 0.3s;
+}
+
+.footer-bottom a:hover {
+color: #aaa;
+}

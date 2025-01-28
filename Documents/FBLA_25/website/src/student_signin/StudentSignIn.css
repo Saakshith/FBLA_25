@@ -1,0 +1,155 @@
+.signin{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.signin-left{
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    padding-left: var(--default-spacing);
+    background-color: var(--main-background-color);
+}
+
+.signin-left-header{
+    height: 10%;
+    display: flex;
+    align-items: center;
+}
+
+.signin-left-header img{
+    height: 50px;
+}
+
+.signin-left-body{
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.signin-header-top{
+    color: var(--white-color);
+    margin: 0;
+    padding: 0
+}
+
+.signin-header{
+    font-family: var(--accent-font);
+    color: var(--white-color);
+    padding: 0;
+    margin: 0;
+}
+
+.signin-header-bottom{
+    color: var(--light-grey);
+    padding: 0;
+    margin: 0;
+}
+
+.signin-header-bottom-link{
+    color: var(--white-color)
+}
+
+.sign-in-left-body-main{
+    width: 50%;
+}
+
+.sign-in-left-body-main form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sign-in-form-container{
+    display: flex;
+    flex-direction: column;
+    color: var(--white-color);
+    font-size: 14px;
+}
+
+.sign-in-form-container input{
+    padding: 0.5rem 1rem;
+    background-color: transparent;
+    border: 1px solid var(--light-grey);
+    border-radius: 5px;
+}
+
+.forgot-password{
+    color: var(--light-grey);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.3rem 0;
+}
+
+.sign-in-button{
+    background-color: var(--accent-color);
+    color: var(--white-color)
+}
+
+.sign-in-form-break{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--light-grey)
+}
+
+.sign-in-alternate-options-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sign-in-alternate-options-container button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background-color: transparent;
+    border: 1px solid var(--white-color);
+    border-radius: 50px;
+    width: 100%;
+}
+
+.sign-in-alternate-options-container button img{
+    height: 20px;
+}
+
+.sign-in-alternate-options-container button p{
+    margin: 0;
+    color: var(--light-grey);
+}
+
+.signin-right{
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent-background-color);
+}
+
+.carousel{
+    width: 60%;
+}
+
+.carousel-card{
+    text-align: center;
+}
+
+.carousel-card img{
+    width: 100%;
+}
+
+.carousel-card h3{
+    color: var(--accent-color);
+    font-size: 2rem;
+    font-family: var(--accent-font);
+}
+
+.carousel-card p{
+    color: var(--light-grey);
+}
