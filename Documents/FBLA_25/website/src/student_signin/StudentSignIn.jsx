@@ -39,7 +39,7 @@ const StudentSignIn = () => {
                     </div>
                     <div className="sign-in-form-container">
                         <label htmlFor="">Password</label>
-                        <input type="text" />
+                        <input type="password" />
                         <Link className='forgot-password'>Forgot Password</Link>
                     </div>
                     <button className="sign-in-button">Sign In</button>

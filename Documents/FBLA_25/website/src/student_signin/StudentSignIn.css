@@ -153,3 +153,7 @@
 .carousel-card p{
     color: var(--light-grey);
 }
+
+input{
+    color: var(--white-color);
+}
