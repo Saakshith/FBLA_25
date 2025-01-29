@@ -4,6 +4,8 @@ import "./FindJobs.css"
 import nchsLogo from "../images/nchs_logo.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import Filters from './filters/Filters'
+import FindJobsCard from './find_jobs_card/FindJobsCard'
 
 const FindJobs = () => {
   return (
@@ -15,6 +17,12 @@ const FindJobs = () => {
         <div className="find-jobs-hero-bottom">
             <input type="text" />
             <FontAwesomeIcon icon={faSearch} className='search-icon'/>
+        </div>
+      </div>
+      <div className="find-jobs-main">
+        <Filters />
+        <div className="find-jobs-card-container">
+            <FindJobsCard />
         </div>
       </div>
     </div>

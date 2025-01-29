@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom'
-import nchsLogo from '../../images/nchs_logo.png';
+import nchsLogo from '../images/nchs_logo.png';
 import "./NavbarHome.css"
 
 

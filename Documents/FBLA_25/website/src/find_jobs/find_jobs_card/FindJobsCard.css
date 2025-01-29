@@ -1,0 +1,71 @@
+.find-jobs-card{
+    background-color: var(--dark-grey);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.find-jobs-card-left{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.find-jobs-card-left img{
+    height: 75px
+}
+
+.job-role-company-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.job-role{
+    padding: 0;
+    margin: 0;
+    color: var(--white-color);
+}
+
+.job-company{
+    padding: 0;
+    margin: 0;
+    color: var(--light-grey);
+}
+
+.find-jobs-card-center{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+}
+
+.job-detail{
+    background-color: #575757;
+    height: fit-content;
+    padding: 0.5rem;
+    color: var(--white-color);
+    border-radius: 10px;
+    font-size: 0.85rem;
+}
+
+.job-detail p{
+    padding: 0;
+    margin: 0;
+}
+
+.number-of-applicants{
+    color: var(--green-color);
+}
+
+.find-jobs-card-right{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.job-post-time{
+    color: var(--light-grey);
+    font-size: 0.9rem;
+}
+

@@ -1,4 +1,4 @@
-.student-landing-page{
+.company-landing-page{
     height: fit-content;
     background-color: var(--main-background-color);
 }
@@ -51,35 +51,42 @@
    border-radius: 39;
 }
 
-.about-us{
+.how{
     padding: 25vw var(--default-spacing) 0 var(--default-spacing);
 }
 
-.about-us-section-header{
+
+.how-section-header{
     color: var(--white-color);
     font-size: 2rem;
     font-family: var(--accent-font);
 }
 
-.about-us-main{
+.how-main{
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     gap: 4rem;
 }
 
-.about-us-left{
-    width: 50%;
+.how-card{
+    background-color: var(--accent-background-color);
+    width: 30%;
+    height: 230px;
+    padding: 1rem 3rem;
 }
 
-.about-us-left img{
-    width: 100%;
-    min-width: 300px;
+.how-card-description{
+    font-size: clamp(0.9rem, 1vw, 1.5rem);
 }
 
-.about-us-right{
-    width: 50%;
-    color: var(--light-grey);
+.how-card-header{
+    font-size: 1.4rem;
+}
+
+.how-card-icon{
+    
 }
 
 .scroll-container {

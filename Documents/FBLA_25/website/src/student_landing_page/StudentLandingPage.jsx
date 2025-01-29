@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react'
 
-import NavbarHome from './navbar_home/NavbarHome'
-import Footer from './footer_home/Footer'
+import NavbarHome from '../navbar_home/NavbarHome'
+import Footer from '../footer_home/Footer'
 
 import "./StudentLandingPage.css"
 
@@ -47,25 +47,34 @@ const StudentLandingPage = () => {
     const faqData = [
       {
         question: "What is NCHS Job Finder?",
-        answer: "NCHS Job Finder connects students with job opportunities within their school community and beyond.",
+        answer: "NCHS Job Finder is a platform designed to connect students with job opportunities both within their school community and in the local area. Whether you're looking for part-time work, internships, or seasonal positions, our goal is to help students gain real-world experience and develop essential skills for their future careers."
       },
       {
         question: "How do I apply for jobs?",
-        answer: "Click on the 'Find Jobs' button, create an account, and start browsing available positions.",
+        answer: "To apply for jobs, click on the 'Find Jobs' button on our homepage. If you don’t have an account yet, you’ll need to create one by providing some basic information. Once registered, you can browse available job listings, read descriptions, and submit applications directly through the platform. Some positions may require additional documents, such as a resume or cover letter."
       },
       {
         question: "Can companies post job listings?",
-        answer: "Yes, companies can post job listings by clicking the 'For Companies' button and signing up.",
+        answer: "Yes! Businesses and organizations looking to hire students can post job listings on our platform. To do so, click on the 'For Companies' button, sign up for an employer account, and submit job postings with details such as job description, requirements, and application instructions. Our team reviews each listing to ensure it aligns with student employment opportunities."
       },
       {
         question: "Is this platform free for students?",
-        answer: "Yes, students can use the platform for free to find job opportunities.",
+        answer: "Absolutely! NCHS Job Finder is completely free for students to use. Our mission is to provide equal access to job opportunities without any cost, helping students build work experience, earn income, and explore career paths without financial barriers."
       },
       {
-        question: "Why is this website so good?",
-        answer: "This website offers an excellent user experience and connects students to meaningful opportunities.",
+        question: "Why is this website so helpful for students?",
+        answer: "NCHS Job Finder is a valuable resource for students because it streamlines the job search process, making it easier to find opportunities that fit their schedules and interests. The platform is designed with students in mind, offering a user-friendly interface, curated job postings, and support to help students gain work experience, develop professional skills, and build connections in their chosen fields."
       },
+      {
+        question: "What types of jobs are available on NCHS Job Finder?",
+        answer: "Our platform offers a variety of job opportunities, including part-time positions, internships, seasonal jobs, and volunteer opportunities. Jobs may be available in industries such as retail, hospitality, tutoring, administrative work, and more. We continuously update our listings to provide diverse opportunities for students with different skills and career interests."
+      },
+      {
+        question: "How can I increase my chances of getting hired?",
+        answer: "To improve your chances of getting hired, ensure your profile is complete and up to date. Tailor your resume to highlight relevant skills and experiences, and write a strong cover letter that explains why you’re a great fit for the position. Additionally, check the platform regularly for new job postings and apply promptly to increase your visibility to employers."
+      }
     ];
+    
   
     const [activeIndex, setActiveIndex] = useState(null);
   
@@ -80,7 +89,7 @@ const StudentLandingPage = () => {
         <NavbarHome />
         <div className="hero-main">
           <h1 className="hero-heading">Find Your Next Job As an NCHS Student</h1>
-          <p className="hero-description">User-friendly job search application , recognized nationwide, and known for our amazing commitment to our students</p>
+          <p className="hero-description">User-friendly job search application and known for our amazing commitment to our students</p>
           <div className="hero-button-container">
             <button className="primary-cta">Find Jobs</button>
             <button className="secondary-cta">For Companies</button>
@@ -97,7 +106,14 @@ const StudentLandingPage = () => {
             <img src={aboutUsImg} alt="" />
           </div>
           <div className="about-us-right">
-            <p>At NCHS Job Finder, we connect students with incredible job opportunities within their school community and beyond. Our platform helps students find part-time jobs, internships, and seasonal positions at local businesses and organizations. Whether you're looking to gain work experience or earn some extra income, we’re here to help you on your journey. <br /> We believe in empowering students to discover career paths, develop valuable skills, and build their professional networks early on. Join us and be part of a growing community of students taking the first step toward their bright future!</p>
+            <p>At NCHS Job Finder, we are dedicated to connecting students with meaningful job opportunities within their school community and beyond. Our platform is designed to
+               bridge the gap between local businesses, organizations, and students eager to gain valuable work experience. Whether you're searching for a 
+               part-time job, an internship, or seasonal work, 
+              NCHS Job Finder is your go-to resource for exploring opportunities that align with your interests and career goals. <br /> 
+            <p></p>
+            We believe in empowering students to discover career paths, develop valuable skills, and build their professional networks early on. Join us and be part of a growing community of students taking the first step toward their bright future!</p>
+            <p>We’re passionate about helping students like you create connections and build a professional network that will open doors to future opportunities. Employers on our platform are committed to 
+              supporting student growth and understand the unique perspectives and energy students bring to the workplace.</p>
           </div>
         </div>
       </section>
@@ -117,7 +133,9 @@ const StudentLandingPage = () => {
       <section className="faq">
         <div className="faq-section-header-container">
           <h2 className="faq-section-header">Frequently Asked Questions About Us</h2>
-          <p className="faq-section-description">Need help with something, here are our frequently asked questions</p>
+          <p className="faq-section-description">If you need assistance, please refer to our Frequently Asked Questions (FAQ)s
+            ection for detailed information and answers to common inquiries.
+          </p>
         </div>
         <div className="faq-accordion-container">
           {faqData.map((faq, index) => (

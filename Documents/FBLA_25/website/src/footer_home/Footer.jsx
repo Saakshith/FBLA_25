@@ -1,6 +1,6 @@
 import React from 'react'
 import "./Footer.css"
-import nchsLogo from "../../images/nchs_logo.png"
+import nchsLogo from "../images/nchs_logo.png"
 import { Link } from 'react-router-dom'
 
 const Footer = () => {

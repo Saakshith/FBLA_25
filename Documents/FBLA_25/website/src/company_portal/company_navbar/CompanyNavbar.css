@@ -1,0 +1,38 @@
+/* .company-navbar{
+    height: 10vh;
+    display: flex;
+    padding: 0 var(--default-spacing);
+    background-color: var(--dark-grey);
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo img{
+    height: 50px;
+}
+
+.logo h3{
+    border-left: 1px solid var(--light-grey);
+    padding-left: 1rem;
+    color: var(--white-color);
+    font-family: var(--accent-font);
+}
+
+.nav-center{
+    display: flex;
+    gap: 1rem; 
+}
+
+.nav-link{
+    color: var(--white-color)
+}
+
+.profile-picture img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+} */

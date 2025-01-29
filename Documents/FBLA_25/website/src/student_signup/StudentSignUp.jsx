@@ -48,7 +48,7 @@ import studentHeroImg from "../images/student_hero_img.png"
                         <label htmlFor="">Password</label>
                         <input type="password" />
                     </div>
-                    <button className="sign-in-button">Sign In</button>
+                    <button className="sign-in-button">Sign Up</button>
                 </form>
                 <div className="sign-in-form-break">
                     <p>-----------or-------------</p>
@@ -64,17 +64,20 @@ import studentHeroImg from "../images/student_hero_img.png"
             <div className='carousel-card'>
                 <img src={studentHeroImg} alt="" />
                 <h3>Introducing New Features</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                <p>We’ve added exciting new tools to enhance your job search experience. From personalized job recommendations to an improved application tracking system, 
+                    these updates are designed to help students connect with the best opportunities more efficiently. </p>
             </div>
             <div className='carousel-card'>
                 <img src={studentHeroImg} alt="" />
-                <h3>Ducks and Me</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                <h3>See Open Job Postings</h3>
+                <p>Explore a wide range of job opportunities, including part-time positions, internships, and seasonal work. 
+                    Browse listings from local businesses and organizations looking to hire students like you. </p>
             </div>
             <div className='carousel-card'>
                 <img src={studentHeroImg} alt="" />
-                <h3>Biggaaaaaaa</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                <h3>Customize Profile and Connect with Companies</h3>
+                <p>Create a professional profile to showcase your skills, experience, and interests. 
+                    Connect directly with employers, apply to jobs, and start building your network for future career opportunities. </p>
             </div>
         </Slider>
       </div>

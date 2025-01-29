@@ -1,0 +1,203 @@
+*{
+    overflow: hidden;
+}
+
+.apply{
+    background-color: var(--main-background-color);
+
+
+}
+
+.apply-main{
+    background-color: var(--main-background-color);
+}
+
+.apply-title-container{
+    text-align: center;
+    font-size: 2rem;
+    font-family: var(--accent-font);
+    color: white;
+}
+
+.apply-form-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.apply-form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 90%
+}
+
+
+.apply-form-row{
+    display: flex;
+    flex-direction: column;
+    color: var(--white-color);
+    font-size: 14px;
+    width: 100%;
+}
+
+.apply-form-row input{
+    padding: 0.5rem 1rem;
+    background-color: var(--main-background-color);
+    color: var(--white-color);
+}
+
+input{
+    border: 1px solid var(--light-grey);
+}
+
+.apply-form-row-split-container{
+    display: flex;
+}
+
+.apply-form-row-split{
+    display: flex;
+    flex-direction: column;
+}
+
+.apply-form-row-split input{
+    padding: 0.5rem 1rem;
+    background-color: var(--main-background-color);
+    color: var(--white-color);
+}
+
+.apply-form-row-split label{
+    color: white;
+}
+
+#state{
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--light-grey);   
+    color: var(--light-color);
+}
+
+#state option{
+    color: white;
+}
+
+.apply-form-row-split-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.apply-form-row-split {
+    display: flex;
+    flex-direction: column;
+}
+
+.apply-form-row-split:first-child { /* City */
+    width: 30%; /* Adjust as needed */
+}
+
+.apply-form-row-split:nth-child(2) { /* State */
+    width: 40%; /* Adjust as needed */
+}
+
+.apply-form-row-split:last-child { /* ZIP Code */
+    width: 22%; /* Adjust as needed */
+}
+
+.job-info-apply-button{
+    background-color: var(--accent-color);
+    padding: 1rem 5rem;
+    font-size: 1rem;
+    color: var(--white-color);
+    text-decoration: none;
+    border: none;
+}
+
+@media only screen and (max-width: 1000px){
+    .apply-form-container{
+        width: 100%;
+    }
+    .apply-form{
+        width: 95%;
+        padding: 2rem 0;
+    }
+}
+
+.apply-form-row-split label {
+    color: white;
+}
+  
+.apply-form-row-split select {
+    background-color: transparent; /* Dark background */
+    color: white; /* White font */
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid var(--light-grey);
+}
+  
+  /* Ensuring the dropdown options have the same background and font color */
+.apply-form-row-split select option {
+    background-color: var(--main-background-color);
+    color: white;
+}
+
+.main{
+    display: flex;
+}
+
+.job-info-apply-button {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.job-info-apply-button:hover {
+  background-color: #5a36cc; /* Slightly darker accent color */
+}
+
+.apply-left{
+    width: 50%;
+}
+
+.apply-right{
+    padding:0 var(--default-spacing);
+}
+
+.apply-left img{
+    height: 80%;
+}
+
+/* Custom file upload container */
+.custom-file-upload {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  /* Style the custom "Choose File" button using existing class */
+  .file-upload-button {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.7rem 1.5rem;
+    /* border: 1px solid var(--light-grey); */
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .file-upload-button:hover {
+    background-color: #5a36cc; /* Slightly darker shade of the accent color */
+    border: none;
+  }
+  
+  /* Style for the file name text */
+  .file-name {
+    color: var(--white-color);
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+  

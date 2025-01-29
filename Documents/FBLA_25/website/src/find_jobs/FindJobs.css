@@ -30,11 +30,27 @@
     font-size: 2rem;
     padding: 1rem 0.5rem;
     border: none;
+    color: var(--black-color);
+    font-family: var(--base-font);
 }
 
 .search-icon{
     font-size: 1.5rem;
     background-color: var(--white-color);
-    padding: 1.43rem 1rem;
+    padding: 1.58rem 1rem;
     border: none;
+}
+
+
+.find-jobs-main{
+    display: flex;
+}
+
+.find-jobs-card-container{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: var(--default-spacing);
+    padding-top: 1rem;
 }
