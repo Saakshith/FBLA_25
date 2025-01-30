@@ -1,7 +1,117 @@
 .company-portal-main{
     display: flex;
+    height: 90vh;
+    overflow: hidden;
+}
+
+.company-main-inner{
+    width: 100%;
+    background-color: var(--main-background-color);
+    padding: 2rem;    
+    display: flex;
+    flex-direction: column;
+}
+
+.company-main-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.company-portal-header{
+    color: var(--white-color);
+    font-family: var(--accent-font);
+}
+
+.company-job-status-main-container{
+    display: flex;
+    gap: 2rem;
+    padding-top: 0.5rem;
+}
+
+.company-job-status-container{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.company-job-status-circle{
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+}
+
+#green{
+    background-color: var(--green-color);
+}
+
+#red{
+    background-color: var(--red-color);
+}
+
+#yellow{
+    background-color: var(--yellow-color);
+}
+
+#grey{
+    background-color: var(--light-grey);
+}
+
+.company-job-status{
+    color: var(--light-grey)
+}
+
+.company-main-header-right button{
+    color: var(--white-color);
+    background-color: var(--accent-color);
+}
+
+.company-job-filters-container{
+    display: flex;
+    padding: 2rem 0;
+    gap: 1rem;
+}
+
+.company-job-filter{
+    width: 20%;
+}
+
+.company-job-filter-search{
+    /* padding: 0.5rem 1rem; */
+    background-color: transparent;
+    border-radius: 5px;
+    border: 1px solid var(--white-color);
+    font-family: var(--base-font);
+    color: var(--light-grey);
+    width: 100%;
+    padding: 0.8rem 0;
+}
+
+.company-job-filter select{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: transparent;
+    font-size: 14px;
+    color: var(--light-grey);
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 6"><path fill="%23333" d="M0 0l5 6 5-6z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 10px;
 }
 
 .company-job-card-container{
-    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    overflow-y: scroll;
 }
+
+@media only screen and (max-width: 768px) {
+    
+  }
+  

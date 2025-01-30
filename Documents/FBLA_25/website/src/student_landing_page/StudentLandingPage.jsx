@@ -97,7 +97,7 @@ const StudentLandingPage = () => {
           <img className="hero-img" src={heroImg} alt="" />
         </div>
       </section>
-      <section className='about-us'>
+      <section className='about-us' id="about">
         <div className="about-us-section-header-container">
           <h2 className='about-us-section-header'>About Us</h2>
         </div>
@@ -130,7 +130,7 @@ const StudentLandingPage = () => {
                   </div>
           </div>
       </section>
-      <section className="faq">
+      <section className="faq" id="faq">
         <div className="faq-section-header-container">
           <h2 className="faq-section-header">Frequently Asked Questions About Us</h2>
           <p className="faq-section-description">If you need assistance, please refer to our Frequently Asked Questions (FAQ)s

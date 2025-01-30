@@ -193,4 +193,22 @@
     .about-us-right{
         width: 100%;
     }
+
+    .faq{
+        flex-direction: column;
+    }
+
+    .faq-section-header-container{
+        width: 100%;
+    }
+
+    .faq-section-header,
+    .faq-section-description{
+        text-align: center;
+    }
+    
+
+    .faq-accordion-container{
+        width: 100%;
+    }
 }

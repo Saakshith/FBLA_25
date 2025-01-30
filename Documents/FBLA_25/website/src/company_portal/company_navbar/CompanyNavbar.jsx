@@ -7,7 +7,7 @@ import "./CompanyNavbar.css"
 const CompanyNavbar = () => {
   return (
     <nav className='company-navbar'>
-      {/* <div className="logo-container">
+      <div className="logo-container">
         <Link className="logo">
             <img src={nchsLogo} alt="" />
             <h3>Recruitment</h3>
@@ -20,7 +20,7 @@ const CompanyNavbar = () => {
       </div>
       <div className="nav-right">
         <Link className='profile-picture'><img src={sampleProfilePicture} alt="" /></Link>
-      </div> */}
+      </div>
     </nav>
   )
 }

@@ -157,3 +157,32 @@
 input{
     color: var(--white-color);
 }
+
+@media only screen and (max-width: 768px) {
+    /* Hide the right section on smaller screens */
+    .signin-right {
+        display: none;
+        width: 0;
+    }
+
+    /* Make the left section take up the full width */
+    .signin-left {
+        width: 100vw;
+        padding-left: 1rem; /* Optional: Adjust padding for smaller screens */
+    }
+
+    /* Center-align content on smaller screens */
+    .signin-left-body {
+        align-items: center; /* Center-align content horizontally */
+    }
+
+    .sign-in-left-body-main {
+        width: 80%; /* Increase width to fill more space on smaller screens */
+    }
+
+    .signin-header-top{
+        text-align: center;
+    }
+}
+
+  

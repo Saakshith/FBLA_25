@@ -1,6 +1,6 @@
-/* .company-sidebar{
-    height: 93vh;
-    padding: 1rem;
+.company-sidebar{
+    height: 90vh;
+    padding: 0rem;
     display: flex;
     flex-direction: column;
     background-color: var(--dark-grey);
@@ -11,6 +11,19 @@
     flex-direction: column;
 }
 
+.company-container{
+    padding: 1rem;
+}
+
+.company-container-active{
+    background-color: var(--light-grey)
+}
+
 .company-container img{
     width: 50px;
-} */
+}
+
+.plus-sign{
+    color: var(--light-grey);
+    padding: 1rem;
+}

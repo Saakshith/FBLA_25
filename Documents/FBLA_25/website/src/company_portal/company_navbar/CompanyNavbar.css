@@ -1,4 +1,4 @@
-/* .company-navbar{
+.company-navbar{
     height: 10vh;
     display: flex;
     padding: 0 var(--default-spacing);
@@ -35,4 +35,4 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-} */
+}

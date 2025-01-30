@@ -7,6 +7,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import studentHeroImg from "../images/student_hero_img.png"
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth, db } from "../firebase"
+import { setDoc, doc } from "firebase/firestore"
 
     const StudentSignUp = () => {
       const settings = {
@@ -18,42 +21,66 @@ import studentHeroImg from "../images/student_hero_img.png"
         slidesToScroll: 1,
     };
 
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("") 
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("") 
+
+    const handleRegister = async (e) => {
+        e.preventDefault()
+        try {
+            await createUserWithEmailAndPassword(auth, email, password)
+            const user = auth.currentUser;
+            if (user) {
+                await setDoc(doc(db, "Users", user.uid), {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email:  user.email,
+                })
+            }
+            window.alert("User registered successfully")
+            window.location.href = "/findjobs"
+        } catch (error) {
+            window.alert(error.message)
+        }
+    }
+
     return (
     <div className='signup'>
       <div className="signup-left">
         <div className="signup-left-header">
-            <Link><img src={nchsLogo} alt="" /></Link>
+            <Link to="/"><img src={nchsLogo} alt="" /></Link>
         </div>
         <div className="signup-left-body">
             <div className="signup-left-body-header-container">
                 <p className="signup-header-top">Start Your Journey</p>
                 <h2 className="signup-header">Sign Up for Jobs at NCHS</h2>
-                <p className="signup-header-bottom">Have an account already? <Link className='signup-header-bottom-link'>Sign In</Link></p>
+                <p className="signup-header-bottom">Have an account already? <Link className='signup-header-bottom-link' to="/signin">Sign In</Link></p>
             </div>
-            <div className="sign-in-left-body-main">
-                <form action="">
-                    <div className="sign-in-form-container">
+            <div className="sign-up-left-body-main">
+                <form onSubmit={handleRegister}>
+                    <div className="sign-up-form-container">
                         <label htmlFor="">First Name</label>
-                        <input type="text" />
+                        <input type="text" onChange={(e) => setFirstName(e.target.value)} required/>
                     </div>
-                    <div className="sign-in-form-container">
+                    <div className="sign-up-form-container">
                         <label htmlFor="">Last Name</label>
-                        <input type="text" />
+                        <input type="text" onChange={(e) => setLastName(e.target.value)} required/>
                     </div> 
-                    <div className="sign-in-form-container">
+                    <div className="sign-up-form-container">
                         <label htmlFor="">Email</label>
-                        <input type="email" />
+                        <input type="email" onChange={(e) => setEmail(e.target.value)} required/>
                     </div> 
-                    <div className="sign-in-form-container">
+                    <div className="sign-up-form-container">
                         <label htmlFor="">Password</label>
-                        <input type="password" />
+                        <input type="password" onChange={(e) => setPassword(e.target.value)} required/>
                     </div>
-                    <button className="sign-in-button">Sign Up</button>
+                    <button className="sign-up-button" type="submit">Sign Up</button>
                 </form>
-                <div className="sign-in-form-break">
+                <div className="sign-up-form-break">
                     <p>-----------or-------------</p>
                 </div>
-                <div className="sign-in-alternate-options-container">
+                <div className="sign-up-alternate-options-container">
                     <button><img src={googleLogo} alt="" /><p>Continue With Google</p></button>
                 </div>
             </div>

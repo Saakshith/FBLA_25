@@ -78,3 +78,18 @@ transition: color 0.3s;
 .footer-bottom a:hover {
 color: #aaa;
 }
+
+@media only screen and (max-width: 768px) {
+    .footer-heading{
+        text-align: center;
+    }
+
+    .footer-text{
+        text-align: center;
+    }
+
+    .footer-section{
+        justify-content: center;
+    }
+  }
+  

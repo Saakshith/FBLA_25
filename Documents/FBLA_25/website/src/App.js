@@ -8,6 +8,7 @@ import JobInfo from "./job_info/JobInfo"
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import JobApplication from './job_application/JobApplication';
 import CompanyPortal from './company_portal/CompanyPortal';
+import AdminPortal from './admin_portal/AdminPortal';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/jobinfo" element={<JobInfo />} />
           <Route path="/jobapplication" element={<JobApplication />} />
           <Route path="/companyportal" element={<CompanyPortal />} />
+          <Route path="/adminportal" element={<AdminPortal />}/>
         </Routes>
       </BrowserRouter>
     </div>

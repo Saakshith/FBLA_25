@@ -1,15 +1,14 @@
-*{
-    overflow: hidden;
-}
 
 .apply{
     background-color: var(--main-background-color);
-
-
 }
 
 .apply-main{
     background-color: var(--main-background-color);
+}
+
+.apply-left{
+    overflow: hidden;
 }
 
 .apply-title-container{
@@ -91,16 +90,16 @@ input{
     flex-direction: column;
 }
 
-.apply-form-row-split:first-child { /* City */
-    width: 30%; /* Adjust as needed */
+.apply-form-row-split:first-child { 
+    width: 30%; 
 }
 
-.apply-form-row-split:nth-child(2) { /* State */
-    width: 40%; /* Adjust as needed */
+.apply-form-row-split:nth-child(2) { 
+    width: 40%; 
 }
 
-.apply-form-row-split:last-child { /* ZIP Code */
-    width: 22%; /* Adjust as needed */
+.apply-form-row-split:last-child { 
+    width: 22%; 
 }
 
 .job-info-apply-button{
@@ -127,14 +126,14 @@ input{
 }
   
 .apply-form-row-split select {
-    background-color: transparent; /* Dark background */
-    color: white; /* White font */
+    background-color: transparent; 
+    color: white;
     padding: 8px;
     border-radius: 5px;
     border: 1px solid var(--light-grey);
 }
-  
-  /* Ensuring the dropdown options have the same background and font color */
+
+
 .apply-form-row-split select option {
     background-color: var(--main-background-color);
     color: white;
@@ -156,7 +155,7 @@ input{
 }
 
 .job-info-apply-button:hover {
-  background-color: #5a36cc; /* Slightly darker accent color */
+  background-color: #5a36cc; 
 }
 
 .apply-left{
@@ -171,33 +170,28 @@ input{
     height: 80%;
 }
 
-/* Custom file upload container */
 .custom-file-upload {
     display: flex;
     align-items: center;
     gap: 1rem;
   }
   
-  /* Style the custom "Choose File" button using existing class */
   .file-upload-button {
     background-color: var(--accent-color);
     color: white;
     padding: 0.7rem 1.5rem;
-    /* border: 1px solid var(--light-grey); */
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
   
   .file-upload-button:hover {
-    background-color: #5a36cc; /* Slightly darker shade of the accent color */
+    background-color: #5a36cc; 
     border: none;
   }
   
-  /* Style for the file name text */
   .file-name {
     color: var(--white-color);
     font-size: 0.9rem;
     font-style: italic;
   }
-  
