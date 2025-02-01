@@ -73,7 +73,7 @@ const CompanyLandingPage = () => {
       },
       {
         question: "Can I schedule interviews with applicants?",
-        answer: "Yes! Once you’ve reviewed applicants, you can schedule interviews directly through the platform, making the hiring process streamlined and efficient."
+        answer: "Yes! Once you've reviewed applicants, you can schedule interviews directly through the platform, making the hiring process streamlined and efficient."
       }
     ];
     
@@ -98,7 +98,7 @@ const CompanyLandingPage = () => {
           <img className="hero-img" src={heroImg} alt="" />
         </div>
       </section>
-      <section className='how'>
+      <section className='how' id="how">
         <div className="how-section-header-container">
           <h2 className='how-section-header'>How It Works For Companies</h2>
         </div>
@@ -138,7 +138,7 @@ const CompanyLandingPage = () => {
                   </div>
           </div>
       </section>
-      <section className="faq">
+      <section className="faq" id="faq">
         <div className="faq-section-header-container">
           <h2 className="faq-section-header">Frequently Asked Questions About Us</h2>
           <p className="faq-section-description">If you need assistance, please refer to our Frequently Asked Questions (FAQ)
