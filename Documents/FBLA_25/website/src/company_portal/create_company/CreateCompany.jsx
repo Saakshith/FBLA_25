@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db, storage, auth } from '../../firebase';
-import { collection, addDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import './CreateCompany.css';
-import NavbarMain from '../../find_jobs/navbar_main/NavbarMain';
+import CompanyNavbar from '../company_navbar/CompanyNavbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudUpload, faTrash } from '@fortawesome/free-solid-svg-icons';
+import LoadingSpinner from '../../loading_spinner/LoadingSpinner';
 
 const CreateCompany = () => {
   const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     industry: '',
@@ -89,7 +90,8 @@ const CreateCompany = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    setLoading(true);
+
     if (!auth.currentUser) {
       alert('You must be logged in to create a company');
       navigate('/signin');
@@ -97,9 +99,6 @@ const CreateCompany = () => {
     }
 
     try {
-      setIsSubmitting(true);
-
-      // Upload logo
       let logoUrl = '';
       if (logoFile) {
         const logoRef = ref(storage, `company-logos/${auth.currentUser.uid}/${Date.now()}-${logoFile.name}`);
@@ -129,19 +128,29 @@ const CreateCompany = () => {
         teamMembers: [userRef]
       };
 
-      await addDoc(collection(db, 'Companies'), companyData);
-      navigate(`/companyportal/companyData/${companyData.id}`);
+      const docRef = await addDoc(collection(db, 'Companies'), companyData);
+      
+      // Update user's companies array
+      await updateDoc(userRef, {
+        companyIds: arrayUnion(docRef.id)
+      });
+
+      navigate(`/companyportal/companyData/${docRef.id}`);
     } catch (error) {
       console.error('Error creating company:', error);
       alert('Error creating company. Please try again.');
     } finally {
-      setIsSubmitting(false);
+      setLoading(false);
     }
   };
 
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <section className='create-company'>
-      <NavbarMain />
+      <CompanyNavbar />
       <div className='create-company-main'>
         <div className="create-company-title-container">
           <h1 className="create-company-title">Create a new Company</h1>
@@ -276,9 +285,8 @@ const CreateCompany = () => {
             <button 
               className="create-company-button" 
               type="submit"
-              disabled={isSubmitting}
             >
-              {isSubmitting ? 'Creating...' : 'Create Company'}
+              Create Company
             </button>
           </form>
         </div>

@@ -32,5 +32,84 @@
     color: white;
 }
 
+@media only screen and (max-width: 768px) {
+    .company-sidebar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 120px; /* Increased height to show full content */
+        width: 100%;
+        z-index: 100;
+        border-top: 1px solid var(--light-grey);
+        background-color: var(--dark-grey);
+    }
+
+    .companies {
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        height: 100%; /* Ensure full height is used */
+        align-items: center; /* Center items vertically */
+        padding: 0.5rem;
+    }
+
+    .companies::-webkit-scrollbar {
+        display: none;
+    }
+
+    .company-container {
+        padding: 0.75rem;
+        min-width: fit-content;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        height: auto; /* Allow natural height */
+    }
+
+    .company-container img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        display: block; /* Ensure proper image display */
+    }
+
+    /* Adjust main content to account for fixed sidebar */
+    .company-portal-main {
+        padding-bottom: 120px;
+    }
+
+    .plus-sign {
+        padding: 0.75rem;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding-bottom: 2rem;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .company-sidebar {
+        height: 100px;
+    }
+
+    .company-portal-main {
+        padding-bottom: 100px;
+    }
+
+    .company-container {
+        padding: 0.5rem;
+    }
+
+    .company-container img {
+        width: 40px;
+        height: 40px;
+    }
+}
+
 
 

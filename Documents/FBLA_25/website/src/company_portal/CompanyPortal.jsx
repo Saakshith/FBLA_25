@@ -8,6 +8,7 @@ import CompanyJobCard from './company_job_card/CompanyJobCard';
 import CreateJobPopup from './create_job_popup/CreateJobPopup';
 import './CompanyPortal.css';
 import JobDetails from './job_details/JobDetails';
+import LoadingSpinner from '../loading_spinner/LoadingSpinner';
 
 const CompanyPortal = () => {
   const { companyId } = useParams();
@@ -23,6 +24,7 @@ const CompanyPortal = () => {
   const [salary, setSalary] = useState(12);
   const [isPopupOpen, setIsPopupOpen] = useState(false); 
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   // Fetch logged-in user data
   useEffect(() => {
@@ -40,6 +42,7 @@ const CompanyPortal = () => {
   // Fetch companies associated with the logged-in user
   useEffect(() => {
     const fetchCompanies = async () => {
+      setIsLoading(true);
       if (!user) return;
 
       try {
@@ -59,7 +62,9 @@ const CompanyPortal = () => {
 
         if (companyList.length === 0) navigate('/create-company');
       } catch (error) {
-        console.error('Error fetching companies:', error);
+        console.error('Error:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -145,6 +150,10 @@ const CompanyPortal = () => {
     setIsPopupOpen(false);
   };
 
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <div>
       <CompanyNavbar />
@@ -181,7 +190,7 @@ const CompanyPortal = () => {
                 <option value="">All Statuses</option>
                 <option value="Open">Open</option>
                 <option value="Rejected">Rejected</option>
-                <option value="Hold">Hold</option>
+                <option value="Pending">Pending</option>
                 <option value="Draft">Draft</option>
               </select>
             </div>

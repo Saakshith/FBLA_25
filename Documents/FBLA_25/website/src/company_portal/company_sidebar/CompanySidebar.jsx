@@ -208,7 +208,7 @@ const CompanySidebar = ({ userId, companies, setSelectedCompany, selectedCompany
         ))}
       </div>
 
-      <Link className="plus-container" onClick={handleCreateCompany}>
+      <Link className="plus-container" to={"/createcompany"}>
         <FontAwesomeIcon icon={faPlus} className='plus-sign' />
       </Link>
     </nav>

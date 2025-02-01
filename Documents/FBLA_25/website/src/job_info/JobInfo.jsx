@@ -6,6 +6,7 @@ import NavbarMain from '../find_jobs/navbar_main/NavbarMain';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationDot, faClock, faDollarSign, faBriefcase, faUsers } from '@fortawesome/free-solid-svg-icons';
 import "./JobInfo.css";
+import LoadingSpinner from '../loading_spinner/LoadingSpinner';
 
 const JobInfo = () => {
   const { jobId } = useParams();
@@ -66,7 +67,7 @@ const JobInfo = () => {
   }, [jobId, navigate]);
 
   if (loading || !job || !companyDetails) {
-    return <div className="loading">Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   const formattedPostTime = job.postTime?.seconds ? 

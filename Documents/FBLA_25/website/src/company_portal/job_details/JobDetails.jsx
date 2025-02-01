@@ -4,6 +4,7 @@ import { db } from '../../firebase';
 import { doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import CompanyNavbar from '../company_navbar/CompanyNavbar';
 import './JobDetails.css';
+import LoadingSpinner from '../../loading_spinner/LoadingSpinner';
 
 const JobDetails = () => {
   const { jobId } = useParams();
@@ -85,7 +86,7 @@ const JobDetails = () => {
   };
 
   if (isLoading) {
-    return <div className="job-details-loading">Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   if (!job) {

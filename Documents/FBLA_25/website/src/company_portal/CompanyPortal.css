@@ -112,6 +112,41 @@
 }
 
 @media only screen and (max-width: 768px) {
-    
+    .company-portal-main {
+        flex-direction: column;
+        height: auto;
+        overflow-x: hidden;
+    }
+
+    .company-main-inner {
+        padding: 1rem;
+    }
+
+    .company-main-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .company-job-filters-container {
+        flex-direction: column;
+        padding: 1rem 0;
+        align-items: center;
+    }
+
+    .company-job-filter {
+        width: 90%;
+    }
+
+    .company-job-card-container {
+        padding: 1rem 0;
+        gap: 1rem;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .company-main-inner {
+        padding: 0.5rem;
+    }
 }
   

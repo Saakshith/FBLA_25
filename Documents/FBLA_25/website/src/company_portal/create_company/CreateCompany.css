@@ -1,13 +1,13 @@
 .create-company {
   min-height: 100vh;
   background-color: var(--main-background-color);
-  padding: 1rem 0;
+  padding: 0 0 1rem 0;
 }
 
 .create-company-main {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 2rem;
   height: calc(100vh - 140px); /* Account for navbar and padding */
   display: flex;
   flex-direction: column;

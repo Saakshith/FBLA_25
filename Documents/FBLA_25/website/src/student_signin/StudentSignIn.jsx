@@ -10,6 +10,7 @@ import studentHeroImg from "../images/student_hero_img.png"
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { auth, db } from '../firebase'
 import { doc, getDoc } from 'firebase/firestore'
+import LoadingSpinner from '../loading_spinner/LoadingSpinner'
 
 const StudentSignIn = () => {
 
@@ -26,9 +27,11 @@ const StudentSignIn = () => {
   const [password, setPassword] = useState("")
 
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleLogin = async (e) => {
     e.preventDefault()
+    setLoading(true)
     try {
         await signInWithEmailAndPassword(auth, email, password)
         setIsLoggedIn(!isLoggedIn)
@@ -36,39 +39,47 @@ const StudentSignIn = () => {
         window.location.href = "/findjobs"
     } catch (error) {
         window.alert(error)
+    } finally {
+        setLoading(false)
     }
   }
 
-  const handleLoginWithGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then(async (res) => {
-        const user = res.user;
-        if (user) {
-          const userDocRef = doc(db, "Users", user.uid);
-          const userDoc = await getDoc(userDocRef);
-  
-          if (userDoc.exists()) {
-            const isGoogleAuth = user.providerData.some(
-              (provider) => provider.providerId === "google.com"
-            );
-  
-            if (isGoogleAuth) {
-              window.location.href = "/findjobs";
-              window.alert("User signed in with Google successfully.");
-              setIsLoggedIn(!isLoggedIn)
-            } else {
-              window.alert("Account exists but is not registered with Google. Please sign in manually.");
-            }
+  const handleLoginWithGoogle = async () => {
+    setLoading(true)
+    try {
+      const provider = new GoogleAuthProvider();
+      const res = await signInWithPopup(auth, provider)
+      const user = res.user;
+      if (user) {
+        const userDocRef = doc(db, "Users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          const isGoogleAuth = user.providerData.some(
+            (provider) => provider.providerId === "google.com"
+          );
+
+          if (isGoogleAuth) {
+            window.location.href = "/findjobs";
+            window.alert("User signed in with Google successfully.");
+            setIsLoggedIn(!isLoggedIn)
           } else {
-            window.alert("No account found. Please sign up instead.");
+            window.alert("Account exists but is not registered with Google. Please sign in manually.");
           }
+        } else {
+          window.alert("No account found. Please sign up instead.");
         }
-      })
-      .catch((error) => {
-        console.error("Error during Google Login: ", error);
-      });
+      }
+    } catch (error) {
+      console.error("Error during Google Login: ", error);
+    } finally {
+      setLoading(false)
+    }
   };
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className='signin'>
@@ -109,7 +120,7 @@ const StudentSignIn = () => {
             <div className='carousel-card'>
                 <img src={studentHeroImg} alt="" />
                 <h3>Introducing New Features</h3>
-                <p>We’ve added exciting new tools to enhance your job search experience. From personalized job recommendations to an improved application tracking system, 
+                <p>We've added exciting new tools to enhance your job search experience. From personalized job recommendations to an improved application tracking system, 
                 these updates are designed to help students connect with the best opportunities more efficiently. </p>
             </div>
             <div className='carousel-card'>

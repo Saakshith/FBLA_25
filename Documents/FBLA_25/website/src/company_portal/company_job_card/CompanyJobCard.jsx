@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from "../../firebase";
 import { Link } from 'react-router-dom';
 import "./CompanyJobCard.css";
 
 const CompanyJobCard = ({ job }) => {
   // Extract job data from the props
-  const { role, salaryMin, salaryMax, location, type, applicants, postTime, endTime, status, companyId, createdBy, rejectionReason } = job;
+  const { role, salaryMin, salaryMax, location, type, postTime, endTime, status, companyId, createdBy, rejectionReason } = job;
   const [creatorName, setCreatorName] = useState("");
   const [showRejectionReason, setShowRejectionReason] = useState(false);
+  const [applicantCount, setApplicantCount] = useState(0);
+  const [interviewCount, setInterviewCount] = useState(0);
 
   useEffect(() => {
     const fetchCreatorName = async () => {
@@ -29,8 +31,33 @@ const CompanyJobCard = ({ job }) => {
       }
     };
 
+    const fetchApplicationCounts = async () => {
+      try {
+        const candidatesQuery = query(
+          collection(db, 'Applications'),
+          where('jobId', '==', doc(db, 'Jobs', job.id))
+        );
+        
+        const candidatesSnapshot = await getDocs(candidatesQuery);
+        setApplicantCount(candidatesSnapshot.size);
+
+        // Count applications with status Interviewing, Accepted, or Denied
+        const completedCount = candidatesSnapshot.docs.reduce((count, doc) => {
+          const status = doc.data().status;
+          return ['Interviewing', 'Accepted', 'Denied'].includes(status) ? count + 1 : count;
+        }, 0);
+        
+        setInterviewCount(completedCount);
+      } catch (error) {
+        console.error('Error fetching application counts:', error);
+        setApplicantCount(0);
+        setInterviewCount(0);
+      }
+    };
+
     fetchCreatorName();
-  }, [createdBy]);
+    fetchApplicationCounts();
+  }, [createdBy, job.id]);
 
   // Convert Firestore timestamp to a readable date if available
   const formattedPostTime = postTime?.seconds 
@@ -100,17 +127,15 @@ const CompanyJobCard = ({ job }) => {
           <Link 
             className="company-job-card-bottom-applicants" 
             to={`/job/${job.id}/candidates`}
-            data-count={job.applicants || 0}
+            data-count={applicantCount}
           >
-            <h3 className='company-job-card-applicants'>{job.applicants || 0}</h3>
+            <h3 className='company-job-card-applicants'>{applicantCount}</h3>
             <p>Candidates Applied</p>
           </Link>
-          <Link 
-            className="company-job-card-interview-container"
-          >
-            <h3 className='company-job-card-interview'>{0}</h3>
+          <div className="company-job-card-interview-container">
+            <h3 className='company-job-card-interview'>{interviewCount}</h3>
             <p>Completed Interviews</p>
-          </Link>
+          </div>
         </div>
       </div>
       <div className="company-job-card-progress-bar-container">

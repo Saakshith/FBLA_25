@@ -10,6 +10,7 @@ import studentHeroImg from "../images/student_hero_img.png"
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth, db } from "../firebase"
 import { setDoc, doc, getDoc } from "firebase/firestore"
+import LoadingSpinner from '../loading_spinner/LoadingSpinner'
 
     const StudentSignUp = () => {
       const settings = {
@@ -25,9 +26,11 @@ import { setDoc, doc, getDoc } from "firebase/firestore"
     const [lastName, setLastName] = useState("") 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("") 
+    const [loading, setLoading] = useState(false)
 
     const handleRegister = async (e) => {
         e.preventDefault()
+        setLoading(true)
         try {
             await createUserWithEmailAndPassword(auth, email, password)
             const user = auth.currentUser;
@@ -42,42 +45,55 @@ import { setDoc, doc, getDoc } from "firebase/firestore"
             window.location.href = "/findjobs"
         } catch (error) {
             window.alert(error.message)
+        } finally {
+            setLoading(false)
         }
     }
 
-    const googleSignup = () => {
-        const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider)
-            .then(async (res) => {
-            const user = res.user;
-            if (user) {
-                const userDocRef = doc(db, "Users", user.uid);
-                const userDoc = await getDoc(userDocRef);
-    
-                if (userDoc.exists()) {
-                window.alert("User already exists. Please sign in instead.");
-                } else {
-                // Split the display name into first and last name
-                const nameParts = user.displayName.split(' ');
-                const firstName = nameParts[0];
-                const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
-    
-                // Create new user document in Firestore
-                await setDoc(userDocRef, {
-                    email: user.email,
-                    firstName: firstName,
-                    lastName: lastName,
-                    photo: user.photoURL
-                });
-                window.location.href = "/findjobs";
-                window.alert("User signed up with Google successfully.");
+    const googleSignup = async () => {
+        setLoading(true)
+        try {
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider)
+                .then(async (res) => {
+                const user = res.user;
+                if (user) {
+                    const userDocRef = doc(db, "Users", user.uid);
+                    const userDoc = await getDoc(userDocRef);
+        
+                    if (userDoc.exists()) {
+                    window.alert("User already exists. Please sign in instead.");
+                    } else {
+                    // Split the display name into first and last name
+                    const nameParts = user.displayName.split(' ');
+                    const firstName = nameParts[0];
+                    const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+        
+                    // Create new user document in Firestore
+                    await setDoc(userDocRef, {
+                        email: user.email,
+                        firstName: firstName,
+                        lastName: lastName,
+                        photo: user.photoURL
+                    });
+                    window.location.href = "/findjobs";
+                    window.alert("User signed up with Google successfully.");
+                    }
                 }
-            }
-            })
-            .catch((error) => {
+                })
+                .catch((error) => {
+                window.alert("Error during Google Signup: ", error);
+            });
+        } catch (error) {
             window.alert("Error during Google Signup: ", error);
-        });
+        } finally {
+            setLoading(false)
+        }
     };
+
+    if (loading) {
+        return <LoadingSpinner />;
+    }
 
     return (
     <div className='signup'>
@@ -125,20 +141,20 @@ import { setDoc, doc, getDoc } from "firebase/firestore"
             <div className='carousel-card'>
                 <img src={studentHeroImg} alt="" />
                 <h3>Introducing New Features</h3>
-                <p>We’ve added exciting new tools to enhance your job search experience. From personalized job recommendations to an improved application tracking system, 
-                    these updates are designed to help students connect with the best opportunities more efficiently. </p>
+                <p>We've added exciting new tools to enhance your job search experience. From personalized job recommendations to an improved application tracking system, 
+                    these updates are designed to help students connect with the best opportunities more efficiently. </p>
             </div>
             <div className='carousel-card'>
                 <img src={studentHeroImg} alt="" />
                 <h3>See Open Job Postings</h3>
                 <p>Explore a wide range of job opportunities, including part-time positions, internships, and seasonal work. 
-                    Browse listings from local businesses and organizations looking to hire students like you. </p>
+                    Browse listings from local businesses and organizations looking to hire students like you. </p>
             </div>
             <div className='carousel-card'>
                 <img src={studentHeroImg} alt="" />
                 <h3>Customize Profile and Connect with Companies</h3>
                 <p>Create a professional profile to showcase your skills, experience, and interests. 
-                    Connect directly with employers, apply to jobs, and start building your network for future career opportunities. </p>
+                    Connect directly with employers, apply to jobs, and start building your network for future career opportunities. </p>
             </div>
         </Slider>
       </div>

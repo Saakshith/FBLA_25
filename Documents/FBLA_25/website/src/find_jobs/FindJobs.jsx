@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import NavbarMain from "./navbar_main/NavbarMain";
 import Filters from "./filters/Filters";
 import FindJobsCard from "./find_jobs_card/FindJobsCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { db } from "../firebase";
-import { collection, query, where, getDocs, getCountFromServer } from "firebase/firestore";
+import { collection, query, where, getDocs, getCountFromServer, getDoc } from "firebase/firestore";
 import LoadingSpinner from "../loading_spinner/LoadingSpinner";
 import "./FindJobs.css";
 
@@ -15,44 +15,50 @@ const FindJobs = () => {
   const [filters, setFilters] = useState({ salary: 12, locations: [], workType: [], searchTag: "" });
   const [jobs, setJobs] = useState([]);
 
-  // Fetch jobs from Firestore on component mount
-  useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const q = query(
-          collection(db, "Jobs"),
-          where("status", "==", "Open")
-        );
-        const querySnapshot = await getDocs(q);
+  const fetchJobs = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const q = query(
+        collection(db, "Jobs"),
+        where("status", "==", "Open")
+      );
+      const querySnapshot = await getDocs(q);
 
-        // Fetch jobs with applicant counts
-        const jobsPromises = querySnapshot.docs.map(async (doc) => {
-          const jobData = { id: doc.id, ...doc.data() };
+      const jobsPromises = querySnapshot.docs.map(async (doc) => {
+        const jobData = { id: doc.id, ...doc.data() };
 
-          // Get application count for this job
-          const applicationsQuery = query(
-            collection(db, "Applications"),
-            where("jobId", "==", doc.ref)
-          );
-          const applicationsSnapshot = await getCountFromServer(applicationsQuery);
-
+        try {
+          const companyDoc = await getDoc(jobData.companyId);
+          
           return {
             ...jobData,
-            applicants: applicationsSnapshot.data().count
+            company: companyDoc.exists() ? companyDoc.data().name : 'Unknown Company',
+            companyLogo: companyDoc.exists() ? companyDoc.data().logoUrl : '',
+            applicants: jobData.applicants || 0
           };
-        });
+        } catch (error) {
+          console.error("Error fetching company data for job:", doc.id, error);
+          return {
+            ...jobData,
+            company: 'Unknown Company',
+            companyLogo: '',
+            applicants: jobData.applicants || 0
+          };
+        }
+      });
 
-        const jobsWithCounts = await Promise.all(jobsPromises);
-        setJobs(jobsWithCounts);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching jobs: ", error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchJobs();
+      const jobsWithCompanyData = await Promise.all(jobsPromises);
+      setJobs(jobsWithCompanyData);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchJobs();
+  }, [fetchJobs]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -63,15 +69,15 @@ const FindJobs = () => {
     const tagLower = filters.searchTag?.toLowerCase();
 
     const matchesSearch =
-      job.role.toLowerCase().includes(searchLower) ||
-      job.company.toLowerCase().includes(searchLower) ||
-      job.location.toLowerCase().includes(searchLower) ||
-      job.type.toLowerCase().includes(searchLower) ||
+      job.role?.toLowerCase().includes(searchLower) ||
+      job.company?.toLowerCase().includes(searchLower) ||
+      job.location?.toLowerCase().includes(searchLower) ||
+      job.type?.toLowerCase().includes(searchLower) ||
       job.salaryMin.toString().includes(searchTerm);
 
     const matchesTag = !tagLower ||
-      job.company.toLowerCase().includes(tagLower) ||
-      job.role.toLowerCase().includes(tagLower);
+      job.company?.toLowerCase().includes(tagLower) ||
+      job.role?.toLowerCase().includes(tagLower);
 
     const matchesSalary = job.salaryMin >= filters.salary;
     const matchesLocation = filters.locations.length === 0 || filters.locations.includes(job.location);

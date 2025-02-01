@@ -7,6 +7,7 @@ import Navbar from "../find_jobs/navbar_main/NavbarMain";
 import "./JobApplication.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudUpload } from '@fortawesome/free-solid-svg-icons';
+import LoadingSpinner from '../loading_spinner/LoadingSpinner';
 
 const JobApplication = () => {
   const { jobId } = useParams();
@@ -14,11 +15,12 @@ const JobApplication = () => {
   const [job, setJob] = useState(null);
   const [companyName, setCompanyName] = useState("");
   const [resumeFile, setResumeFile] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [fileName, setFileName] = useState("No file chosen");
 
   useEffect(() => {
     const fetchJobDetails = async () => {
+      setLoading(true);
       try {
         const jobDoc = await getDoc(doc(db, 'Jobs', jobId));
         if (jobDoc.exists()) {
@@ -35,8 +37,10 @@ const JobApplication = () => {
           navigate('/jobs');
         }
       } catch (error) {
-        console.error('Error fetching job:', error);
+        console.error('Error:', error);
         alert('Error loading job details');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -101,6 +105,10 @@ const JobApplication = () => {
       setLoading(false);
     }
   };
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   if (!job) return <div>Loading...</div>;
 
