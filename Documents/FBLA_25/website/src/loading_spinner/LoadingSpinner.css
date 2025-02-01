@@ -1,5 +1,4 @@
 .loading-container {
-<<<<<<< HEAD
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -70,8 +69,7 @@
       opacity: 1;
     }
   }
-=======
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -82,7 +80,7 @@
   left: 0;
   background-color: #1a1a1a;
   z-index: 9999;
-}
+} */
 
 .loading-spinner {
   display: flex;
@@ -141,4 +139,3 @@
     opacity: 1;
   }
 }
->>>>>>> ce384ada17fe1ba6f645f29dabc6829f8dbb858a
