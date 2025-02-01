@@ -6,8 +6,9 @@ import "./CompanyJobCard.css";
 
 const CompanyJobCard = ({ job }) => {
   // Extract job data from the props
-  const { role, salaryMin, salaryMax, location, type, applicants, postTime, endTime, status, companyId, createdBy } = job;
+  const { role, salaryMin, salaryMax, location, type, applicants, postTime, endTime, status, companyId, createdBy, rejectionReason } = job;
   const [creatorName, setCreatorName] = useState("");
+  const [showRejectionReason, setShowRejectionReason] = useState(false);
 
   useEffect(() => {
     const fetchCreatorName = async () => {
@@ -106,16 +107,51 @@ const CompanyJobCard = ({ job }) => {
         <div className="company-job-card-progress-bar"></div>
       </div>
       <div className="company-job-card-bottom">
-        <p className="company-job-card-creator">
-          Created by <Link className='company-job-card-creator-link'>{creatorName}</Link>
-        </p>
-        <Link 
-          className="company-job-card-bottom-view-details" 
-          to={`/job/${job.id}`}
-        >
-          View Details
-        </Link>
+        <div className="company-job-card-bottom-main">
+          <p className="company-job-card-creator">
+            Created by <Link className='company-job-card-creator-link'>{creatorName}</Link>
+          </p>
+          <div className="company-job-card-buttons">
+            <Link 
+              className="company-job-card-bottom-view-details" 
+              to={`/job/${job.id}`}
+              state={{ setStatusToPending: status === 'Closed' }}
+            >
+              View Details {'>'}
+            </Link>
+            
+            {status === 'Closed' && rejectionReason && (
+              <button 
+                className="view-rejection-reason"
+                onClick={() => setShowRejectionReason(!showRejectionReason)}
+              >
+                {showRejectionReason ? 'Hide Rejection Reason' : 'View Rejection Reason'}
+              </button>
+            )}
+          </div>
+        </div>
       </div>
+
+      {/* Rejection Reason Popup */}
+      {showRejectionReason && status === 'Closed' && rejectionReason && (
+        <div className="rejection-popup-overlay">
+          <div className="rejection-popup">
+            <div className="rejection-popup-header">
+              <h3>Rejection Reason</h3>
+              <button 
+                className="close-rejection-popup"
+                onClick={() => setShowRejectionReason(false)}
+              >
+                ×
+              </button>
+            </div>
+            <p className="rejection-reason-text">{rejectionReason}</p>
+            <p className="rejection-note">
+              Note: To repost this job, please edit the listing to address the rejection reason.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

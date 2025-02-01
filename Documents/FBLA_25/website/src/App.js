@@ -46,6 +46,7 @@ import AdminPortal from './admin_portal/AdminPortal';
 import CreateCompany from './company_portal/create_company/CreateCompany';
 import JobDetails from './company_portal/job_details/JobDetails';
 import JobCandidates from './company_portal/job_candidates/JobCandidates';
+import ForgotPassword from './forgot_password/ForgotPassword';
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
           <Route path="/adminportal" element={<AdminPortal />}/>
           <Route path="/job/:jobId" element={<JobDetails />} />
           <Route path="/job/:jobId/candidates" element={<JobCandidates />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
         </Routes>
       </BrowserRouter>
     </div>
