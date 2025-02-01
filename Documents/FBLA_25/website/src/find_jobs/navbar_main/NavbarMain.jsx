@@ -7,6 +7,7 @@ import { faBriefcase, faBars, faTimes, faBuilding } from '@fortawesome/free-soli
 import sampleProfilePic from "../../images/sample_profile_picture.JPG";
 import { doc, getDoc, collection, query, where, getDocs, documentId } from "firebase/firestore";
 import { auth, db } from '../../firebase';
+import { signOut } from 'firebase/auth';
 
 const NavbarMain = () => {
   const [userDetails, setUserDetails] = useState(null);
@@ -85,6 +86,15 @@ const NavbarMain = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate('/');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
   return (
     <>
       <nav>
@@ -112,7 +122,7 @@ const NavbarMain = () => {
             {userDetails ? (
               <div className='profile-text'>
                 <h3>{userDetails.firstName} {userDetails.lastName}</h3>
-                <p>UI/UX Designer</p>
+                <p onClick={handleLogout} style={{ cursor: 'pointer', color: '#ff4444' }}>Logout</p>
               </div>
             ) : (
               <div className='profile-text'>
@@ -148,7 +158,7 @@ const NavbarMain = () => {
         </div>
 
         <div className="nav-right">
-          <div onClick={handleForBusinessClick} className="for-business" onClick={toggleMobileMenu}>
+          <div className="for-business" onClick={(e) => { handleForBusinessClick(); toggleMobileMenu(); }}>
             <FontAwesomeIcon icon={faBriefcase} className="for-business-icon" />
             <p>For Business</p>
           </div>
@@ -157,7 +167,7 @@ const NavbarMain = () => {
             {userDetails ? (
               <div className='profile-text'>
                 <h3>{userDetails.firstName} {userDetails.lastName}</h3>
-                <p>UI/UX Designer</p>
+                <p onClick={(e) => { e.preventDefault(); handleLogout(); }} style={{ cursor: 'pointer', color: '#ff4444' }}>Logout</p>
               </div>
             ) : (
               <div className='profile-text'>

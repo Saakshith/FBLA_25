@@ -87,6 +87,10 @@ const StudentLandingPage = () => {
     const navigateToCompanyLandingPage = () => {
       window.location.href = '/companylandingpage';
     };
+
+    const navigateToFindJobs = () => {
+      window.location.href = '/findjobs';
+    };
   
 
   return (
@@ -97,7 +101,7 @@ const StudentLandingPage = () => {
           <h1 className="hero-heading">Find Your Next Job As an NCHS Student</h1>
           <p className="hero-description">User-friendly job search application and known for our amazing commitment to our students</p>
           <div className="hero-button-container">
-            <button className="primary-cta">Find Jobs</button>
+            <button className="primary-cta" onClick={navigateToFindJobs}>Find Jobs</button>
             <button className="secondary-cta" onClick={navigateToCompanyLandingPage}>For Companies</button>
           </div>
           <img className="hero-img" src={heroImg} alt="" />
