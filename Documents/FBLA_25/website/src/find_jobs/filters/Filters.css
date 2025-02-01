@@ -126,3 +126,14 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
+
+  @media only screen and (max-width: 800px){
+    .filters{
+      width: 100%;
+    }
+
+    .container{
+      font-size: 0.9rem;
+      display: flex;
+    }
+  }

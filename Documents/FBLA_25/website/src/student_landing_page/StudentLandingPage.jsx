@@ -106,14 +106,19 @@ const StudentLandingPage = () => {
             <img src={aboutUsImg} alt="" />
           </div>
           <div className="about-us-right">
-            <p>At NCHS Job Finder, we are dedicated to connecting students with meaningful job opportunities within their school community and beyond. Our platform is designed to
-               bridge the gap between local businesses, organizations, and students eager to gain valuable work experience. Whether you're searching for a 
-               part-time job, an internship, or seasonal work, 
-              NCHS Job Finder is your go-to resource for exploring opportunities that align with your interests and career goals. <br /> 
-            <p></p>
-            We believe in empowering students to discover career paths, develop valuable skills, and build their professional networks early on. Join us and be part of a growing community of students taking the first step toward their bright future!</p>
-            <p>We’re passionate about helping students like you create connections and build a professional network that will open doors to future opportunities. Employers on our platform are committed to 
-              supporting student growth and understand the unique perspectives and energy students bring to the workplace.</p>
+          <p>At NCHS Job Finder, we are dedicated to connecting students with meaningful job opportunities within their school community and beyond. Our platform is designed to
+   bridge the gap between local businesses, organizations, and students eager to gain valuable work experience. Whether you're searching for a 
+   part-time job, an internship, or seasonal work, 
+   NCHS Job Finder is your go-to resource for exploring opportunities that align with your interests and career goals.</p> 
+
+<br />
+
+<p>We believe in empowering students to discover career paths, develop valuable skills, and build their professional networks early on. Join us and be part of a growing community of students taking the first step toward their bright future!</p>
+<br />
+
+<p>We’re passionate about helping students like you create connections and build a professional network that will open doors to future opportunities. Employers on our platform are committed to 
+   supporting student growth and understand the unique perspectives and energy students bring to the workplace.</p>
+
           </div>
         </div>
       </section>

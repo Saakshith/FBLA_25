@@ -1,6 +1,11 @@
 
 .apply{
     background-color: var(--main-background-color);
+    overflow: hidden;
+}
+
+.main{
+    overflow: hidden;
 }
 
 .apply-main{

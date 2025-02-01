@@ -179,6 +179,7 @@
 
     .about-us-section-header{
         text-align: center;
+        padding-bottom: 1rem;
     }
 
     .about-us-main{
@@ -210,5 +211,9 @@
 
     .faq-accordion-container{
         width: 100%;
+    }
+
+    .about-us p {
+        text-align: center;
     }
 }

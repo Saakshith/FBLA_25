@@ -200,21 +200,22 @@ const JobApplication = () => {
                 </div>
               </div>
               <div className="apply-form-row apply-upload-resume-row">
-                <label>Upload Resume</label>
-                <div className="custom-file-upload">
-                  <input
-                    type="file"
-                    id="file-upload"
-                    name="resume"
-                    style={{ display: 'none' }}
-                    required
-                  />
-                  <label htmlFor="file-upload" className="job-info-apply-button file-upload-button">
-                    Choose File
-                  </label>
-                  <span id="file-name" className="file-name">No file chosen</span>
-                </div>
+              <label>Upload Resume</label>
+              <div className="custom-file-upload">
+                <input
+                  type="file"
+                  id="file-upload"
+                  name="resume"
+                  style={{ display: 'none' }}
+                  required
+                />
+                <label htmlFor="file-upload" className="job-info-apply-button file-upload-button">
+                  Choose File
+                </label>
+                <span id="file-name" className="file-name">No file chosen</span>
               </div>
+            </div>
+
               <button className="job-info-apply-button" type="submit">Apply</button>
             </form>
           </div>

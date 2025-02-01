@@ -14,7 +14,6 @@
 }
 
 .company-job-card-detail-status-container{
-    background-color: var(--green-color);
     height: fit-content;
     display: flex;
     align-items: center;
@@ -132,4 +131,34 @@
 
 .company-job-card-bottom-view-details{
     color: var(--white-color);
+}
+
+.company-job-card-bottom-applicants {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--primary-white);
+  font-size: 1rem;
+}
+
+.company-job-card-bottom-applicants::before {
+  content: attr(data-count);
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.company-job-card-interview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--primary-white);
+}
+
+.company-job-card-interview {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
 }

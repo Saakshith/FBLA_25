@@ -15,7 +15,7 @@ const CompanyNavbar = () => {
       </div>
       <div className="nav-center">
         <Link className="nav-link">Jobs</Link>
-        <Link className="nav-link">Applicants</Link>
+        <Link className="nav-link">Team</Link>
         <Link className="nav-link">Profile</Link>
       </div>
       <div className="nav-right">

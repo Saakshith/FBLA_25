@@ -1,5 +1,5 @@
 import React from 'react';
-import './Filters.css';
+import '../../find_jobs/filters/Filters.css';
 
 const Filters = ({ filters, setFilters }) => {
 

@@ -7,8 +7,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import studentHeroImg from "../images/student_hero_img.png"
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase'
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+import { auth, db } from '../firebase'
+import { doc, getDoc } from 'firebase/firestore'
 
 const StudentSignIn = () => {
 
@@ -24,16 +25,50 @@ const StudentSignIn = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
         await signInWithEmailAndPassword(auth, email, password)
+        setIsLoggedIn(!isLoggedIn)
         window.alert('User Logged In Successfully')
         window.location.href = "/findjobs"
     } catch (error) {
         window.alert(error)
     }
   }
+
+  const handleLoginWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then(async (res) => {
+        const user = res.user;
+        if (user) {
+          const userDocRef = doc(db, "Users", user.uid);
+          const userDoc = await getDoc(userDocRef);
+  
+          if (userDoc.exists()) {
+            const isGoogleAuth = user.providerData.some(
+              (provider) => provider.providerId === "google.com"
+            );
+  
+            if (isGoogleAuth) {
+              window.location.href = "/findjobs";
+              window.alert("User signed in with Google successfully.");
+              setIsLoggedIn(!isLoggedIn)
+            } else {
+              window.alert("Account exists but is not registered with Google. Please sign in manually.");
+            }
+          } else {
+            window.alert("No account found. Please sign up instead.");
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Error during Google Login: ", error);
+      });
+  };
 
   return (
     <div className='signin'>
@@ -64,7 +99,7 @@ const StudentSignIn = () => {
                     <p>-----------or-------------</p>
                 </div>
                 <div className="sign-in-alternate-options-container">
-                    <button><img src={googleLogo} alt="" /><p>Continue With Google</p></button>
+                    <button onClick={handleLoginWithGoogle}><img src={googleLogo} alt="" /><p>Continue With Google</p></button>
                 </div>
             </div>
         </div>

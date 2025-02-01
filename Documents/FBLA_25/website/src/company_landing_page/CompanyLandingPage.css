@@ -75,6 +75,12 @@
     width: 30%;
     height: 230px;
     padding: 1rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
 }
 
 .how-card-description{
@@ -182,20 +188,12 @@
         width: 85vw;
     }
 
-    .about-us-section-header{
+    .how-section-header{
         text-align: center;
+        padding-bottom: 1rem;
     }
 
-    .about-us-main{
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .about-us-left{
-        width: 100%;
-    }
-
-    .about-us-right{
+    .how-card{
         width: 100%;
     }
 

@@ -1,63 +1,132 @@
-nav{
+/* Basic styles for the nav bar */
+nav {
     height: fit-content;
     padding: 1rem var(--default-spacing);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;  /* Position relative to allow absolute positioning of child elements */
 }
 
-.nav-left img{
+/* Left, Middle, Right sections */
+.nav-left img {
     height: 50px;
 }
 
-.nav-middle{
+.nav-middle {
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
 }
 
-
-.nav-right{
+.nav-right {
     display: flex;
     gap: 2rem;
 }
 
-.profile{
+/* Profile section */
+.profile {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1rem;
 }
 
-.for-business{
+.for-business {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.for-business-icon{
+.for-business-icon {
     color: #ddd;
     font-size: 1.5rem;
 }
 
-.for-business p{
+.for-business p {
     margin: 0;
     color: var(--light-grey);
     font-size: 12px;
 }
 
-.profile-icon{
+.profile-icon {
     width: 50px;
     height: 50px;
     border-radius: 50%;
 }
 
-.profile-text h3{
+.profile-text h3 {
     margin: 0;
     color: var(--white-color);
 }
 
-.profile-text p{
+.profile-text p {
     margin: 0;
     color: var(--light-grey);
 }
+
+/* Initially hide the menu elements off-screen */
+.nav-left, .nav-middle, .nav-right {
+    position: absolute;
+    top: 0;
+    right: -100%; /* Position off-screen to the right */
+    width: 50%; /* Adjust to 50% width of the screen */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease-in-out; /* Smooth transition */
+}
+
+/* When the active class is added, move the elements into view */
+nav.active .nav-left, nav.active .nav-middle, nav.active .nav-right {
+    transform: translateX(-100%); /* Move the sections into view */
+}
+
+/* Mobile specific styles */
+@media only screen and (max-width: 768px) {
+    /* Hide the profile and business sections when the menu is open */
+    .profile, .for-business {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+        cursor: pointer;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .hamburger-line {
+        width: 30px;
+        height: 3px;
+        background-color: var(--light-grey);
+        border-radius: 10px;
+    }
+
+    /* Display the menu when active */
+    nav.active .hamburger {
+        display: none; /* Hide hamburger when the menu is open */
+    }
+
+    /* Apply for the active class */
+    nav.active .nav-left, nav.active .nav-middle, nav.active .nav-right {
+        transform: translateX(0); /* Slide menu into view */
+    }
+}
+
+/* For Desktop and larger screens */
+@media only screen and (min-width: 769px) {
+    /* Display the nav sections inline for desktop */
+    .nav-left, .nav-middle, .nav-right {
+        position: static;  /* Reset the position for desktop */
+        transform: none;  /* No need for transform effect */
+        width: auto;  /* Default width */
+        display: flex;  /* Display flex normally */
+    }
+
+    .hamburger {
+        display: none; /* Hide hamburger on desktop */
+    }
+} 

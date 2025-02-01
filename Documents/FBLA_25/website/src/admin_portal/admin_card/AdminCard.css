@@ -36,7 +36,7 @@
 
 }
 
-.job-detail{
+.admin-job-detail{
     background-color: #575757;
     height: fit-content;
     padding: 0.5rem;
@@ -45,7 +45,7 @@
     font-size: 0.85rem;
 }
 
-.job-detail p{
+.adminn-job-detail p{
     padding: 0;
     margin: 0;
 }
@@ -94,4 +94,32 @@
 .admin-card:hover {
     transform: scale(1.03); /* Slightly larger on hover */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+}
+
+@media only screen and (max-width: 800px){
+    .admin-card{
+        width: 100%;
+        height: 25vh;
+        border-radius: 2vh;
+        flex-direction: column;
+        align-self: center;
+    }
+
+    .admin-job-detail{
+        width:fit-content;
+        font-size: 0.72rem;
+    }
+
+    .admin-card-center{
+        justify-content : center;
+        padding-bottom: 0.5rem;
+    }
+
+    .admin-card-left{
+        justify-content: space-between;
+    }
+
+    .job-role-company-container{
+        text-align: right;
+    }
 }

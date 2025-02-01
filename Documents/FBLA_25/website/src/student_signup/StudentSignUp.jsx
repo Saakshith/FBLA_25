@@ -7,9 +7,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import studentHeroImg from "../images/student_hero_img.png"
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { auth, db } from "../firebase"
-import { setDoc, doc } from "firebase/firestore"
+import { setDoc, doc, getDoc } from "firebase/firestore"
 
     const StudentSignUp = () => {
       const settings = {
@@ -44,6 +44,40 @@ import { setDoc, doc } from "firebase/firestore"
             window.alert(error.message)
         }
     }
+
+    const googleSignup = () => {
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+            .then(async (res) => {
+            const user = res.user;
+            if (user) {
+                const userDocRef = doc(db, "Users", user.uid);
+                const userDoc = await getDoc(userDocRef);
+    
+                if (userDoc.exists()) {
+                window.alert("User already exists. Please sign in instead.");
+                } else {
+                // Split the display name into first and last name
+                const nameParts = user.displayName.split(' ');
+                const firstName = nameParts[0];
+                const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
+    
+                // Create new user document in Firestore
+                await setDoc(userDocRef, {
+                    email: user.email,
+                    firstName: firstName,
+                    lastName: lastName,
+                    photo: user.photoURL
+                });
+                window.location.href = "/findjobs";
+                window.alert("User signed up with Google successfully.");
+                }
+            }
+            })
+            .catch((error) => {
+            window.alert("Error during Google Signup: ", error);
+        });
+    };
 
     return (
     <div className='signup'>
@@ -81,7 +115,7 @@ import { setDoc, doc } from "firebase/firestore"
                     <p>-----------or-------------</p>
                 </div>
                 <div className="sign-up-alternate-options-container">
-                    <button><img src={googleLogo} alt="" /><p>Continue With Google</p></button>
+                    <button onClick={googleSignup}><img src={googleLogo} alt="" /><p>Continue With Google</p></button>
                 </div>
             </div>
         </div>

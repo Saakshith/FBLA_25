@@ -53,4 +53,24 @@
     align-items: flex-end;
     padding-right: var(--default-spacing);
     padding-top: 1rem;
+    gap: 1rem;
 }
+
+@media only screen and (max-width: 800px){
+    .find-jobs-main{
+      flex-direction: column;
+    }
+
+    .filter-search{
+        width: 100%;
+    }
+
+    .find-jobs-hero p,
+    .find-jobs-hero h1{
+        text-align: center;
+    }
+
+    .find-jobs-hero h1{
+        padding-bottom: 0.5rem;
+    }
+  }
