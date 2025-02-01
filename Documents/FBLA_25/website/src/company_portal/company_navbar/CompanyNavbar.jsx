@@ -1,11 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import sampleProfilePicture from "../../images/sample_profile_picture.JPG"
 import {Link, useParams} from 'react-router-dom'
 import nchsLogo from "../../images/nchs_logo.png"
 import "./CompanyNavbar.css"
+import { getAuth } from 'firebase/auth'
+import { getFirestore, doc, getDoc } from 'firebase/firestore'
 
 const CompanyNavbar = () => {
-  const { companyId } = useParams();
+  const auth = getAuth()
+  const { companyId } = useParams()
+  const [companyData, setCompanyData] = useState(null)
+
+  useEffect(() => {
+    const fetchCompanyData = async () => {
+      if (companyId) {
+        const db = getFirestore()
+        const companyRef = doc(db, 'Companies', companyId)
+        const companySnap = await getDoc(companyRef)
+        
+        if (companySnap.exists()) {
+          setCompanyData(companySnap.data())
+        }
+      }
+    }
+
+    fetchCompanyData()
+  }, [companyId])
 
   return (
     <nav className='company-navbar'>
