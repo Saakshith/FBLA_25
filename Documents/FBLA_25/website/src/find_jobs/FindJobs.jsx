@@ -4,8 +4,9 @@ import Filters from "./filters/Filters";
 import FindJobsCard from "./find_jobs_card/FindJobsCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { db } from "../firebase";  // Import Firebase db
-import { collection, query, where, getDocs } from "firebase/firestore"; // Firestore functions
+import { db } from "../firebase";
+import { collection, query, where, getDocs, getCountFromServer } from "firebase/firestore";
+import LoadingSpinner from "../loading_spinner/LoadingSpinner";
 import "./FindJobs.css";
 
 const FindJobs = () => {
@@ -51,7 +52,7 @@ const FindJobs = () => {
     };
 
     fetchJobs();
-  }, []); // Empty dependency array means this runs once when the component mounts
+  }, []);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
