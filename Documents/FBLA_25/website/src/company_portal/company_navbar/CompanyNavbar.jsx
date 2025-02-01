@@ -18,7 +18,7 @@ const CompanyNavbar = () => {
       <div className="nav-center">
         <Link className="nav-link">Jobs</Link>
         <Link className="nav-link">Team</Link>
-        <Link className="nav-link">Profile</Link>
+        <Link className="nav-link" to={`/companyprofile/${companyId}`}>Profile</Link>
       </div>
       <div className="nav-right">
         <Link className='profile-picture'><img src={sampleProfilePicture} alt="" /></Link>

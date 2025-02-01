@@ -13,6 +13,7 @@ import CreateCompany from './company_portal/create_company/CreateCompany';
 import JobDetails from './company_portal/job_details/JobDetails';
 import JobCandidates from './company_portal/job_candidates/JobCandidates';
 import ForgotPassword from './forgot_password/ForgotPassword';
+import CompanyProfile from './company_profile/CompanyProfile';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/job/:jobId/candidates" element={<JobCandidates />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/jobs/:jobId/apply" element={<JobApplication />} />
+          <Route path="/company_profile" element={<CompanyProfile />} />
         </Routes>
       </BrowserRouter>
     </div>

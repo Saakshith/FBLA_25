@@ -135,7 +135,7 @@ const CreateCompany = () => {
         companyIds: arrayUnion(docRef.id)
       });
 
-      navigate(`/companyportal/companyData/${docRef.id}`);
+      navigate(`/companyportal/${docRef.id}`);
     } catch (error) {
       console.error('Error creating company:', error);
       alert('Error creating company. Please try again.');
