@@ -35,6 +35,7 @@ function App() {
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/jobs/:jobId/apply" element={<JobApplication />} />
           <Route path="/company_profile" element={<CompanyProfile />} />
+          <Route/>
         </Routes>
       </BrowserRouter>
     </div>
