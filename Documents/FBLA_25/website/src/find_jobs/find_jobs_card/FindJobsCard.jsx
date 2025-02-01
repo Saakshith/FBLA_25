@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./FindJobsCard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { getDoc, doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { getDoc, doc, updateDoc, arrayUnion, arrayRemove, collection, query, where, getDocs } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +10,7 @@ const FindJobsCard = ({ job }) => {
   const [companyLogo, setCompanyLogo] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [isLiked, setIsLiked] = useState(false);
+  const [applicantCount, setApplicantCount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,8 +40,25 @@ const FindJobsCard = ({ job }) => {
       }
     };
 
+    const fetchApplicantCount = async () => {
+      try {
+        const jobRef = doc(db, 'Jobs', job.id);
+        const applicationsQuery = query(
+          collection(db, 'Applications'),
+          where('jobId', '==', jobRef)
+        );
+        
+        const applicationsSnapshot = await getDocs(applicationsQuery);
+        setApplicantCount(applicationsSnapshot.size);
+      } catch (error) {
+        console.error('Error fetching applicant count:', error);
+        setApplicantCount(0);
+      }
+    };
+
     fetchCompanyDetails();
     checkIfLiked();
+    fetchApplicantCount();
   }, [job.companyId, job.id]);
 
   const handleLike = async () => {
@@ -109,7 +127,7 @@ const FindJobsCard = ({ job }) => {
           <p>{job.type}</p>
         </div>
         <div className="job-detail">
-          <p className="number-of-applicants">{job.applicants} Applicants</p>
+          <p className="number-of-applicants">{applicantCount} Applicants</p>
         </div>
       </div>
       <div className="find-jobs-card-right">
