@@ -6,9 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { db } from "../firebase";  // Import Firebase db
 import { collection, query, where, getDocs } from "firebase/firestore"; // Firestore functions
+import LoadingSpinner from '../loading_spinner/LoadingSpinner';
 import "./FindJobs.css";
 
 const FindJobs = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({ salary: 12, locations: [], workType: [], searchTag: '' });
   const [jobs, setJobs] = useState([]);
@@ -27,13 +29,24 @@ const FindJobs = () => {
           ...doc.data()
         }));
         setJobs(jobData);  // Set fetched jobs into state
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching jobs: ", error);
+        setIsLoading(false);
       }
     };
 
     fetchJobs();
   }, []); // Empty dependency array means this runs once when the component mounts
+
+  useEffect(() => {
+    // Make loading last 3 seconds so we can clearly see it
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000); // 3 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -63,6 +76,10 @@ const FindJobs = () => {
     return matchesSearch && matchesTag && matchesSalary && matchesLocation && matchesType;
   });
 
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
   return (
     <div className="find-jobs">
       <NavbarMain />
@@ -75,7 +92,7 @@ const FindJobs = () => {
         <div className="find-jobs-hero-bottom">
           <input
             type="text"
-            placeholder=""
+            placeholder="Search by role, company, location..."
             value={searchTerm}
             onChange={handleSearch}
           />
