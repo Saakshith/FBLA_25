@@ -3,6 +3,7 @@
   padding: 0.5rem var(--default-spacing);
   justify-content: space-between;
   align-items: center;
+  background-color: transparent;
 }
 
 .navbar-left {

@@ -1,7 +1,10 @@
 .job-info-page {
-  height: fit-content;
   background-color: var(--main-background-color);
 }
+/* 
+.job-info-main{
+  height: 140%;
+} */
 
 .job-info-container {
   max-width: 1200px;

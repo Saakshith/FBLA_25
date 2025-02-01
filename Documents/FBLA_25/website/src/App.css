@@ -24,6 +24,7 @@
 
 body{
   overflow-x: hidden;
+  background-color: var(--main-background-color);
 }
 
 section{

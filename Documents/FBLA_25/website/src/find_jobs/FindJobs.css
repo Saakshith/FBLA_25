@@ -1,5 +1,6 @@
 .find-jobs{
     background-color: var(--main-background-color);
+    height: 100vh;
 }
 
 .find-jobs-hero{

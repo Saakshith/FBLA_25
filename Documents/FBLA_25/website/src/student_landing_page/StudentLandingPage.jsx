@@ -5,7 +5,7 @@ import Footer from '../footer_home/Footer'
 
 import "./StudentLandingPage.css"
 
-import heroImg from "../images/student_hero_img.png"
+import heroImg from "../images/student_hero_img_2.png"
 import aboutUsImg from "../images/about_us.jpg"
 import davesHotChickenLogo from '../images/daves_hot_chicken_logo.png';
 import mcDonaldsLogo from '../images/mcdonalds_logo.png';

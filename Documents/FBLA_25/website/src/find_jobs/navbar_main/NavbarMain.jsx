@@ -72,7 +72,7 @@ const NavbarMain = () => {
   const handleForBusinessClick = () => {
     if (companies.length === 0) {
       console.log("No companies, navigating to create-company page");
-      navigate('/create-company'); // Redirect to create company page
+      navigate('/createcompany'); // Redirect to create company page
     } else {
       // Navigate to company portal with the first company's ID (or implement your own logic)
       const firstCompanyId = companies[0].id

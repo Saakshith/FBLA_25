@@ -77,6 +77,7 @@ const JobInfo = () => {
 
   return (
     <div className="job-info-page">
+      <div className='job-info-main'>
       <NavbarMain />
       <div className="job-info-container">
         <div className="job-info-header">
@@ -156,6 +157,7 @@ const JobInfo = () => {
           <h2>About {companyDetails.name}</h2>
           <p>{companyDetails.about}</p>
         </div>
+      </div>
       </div>
     </div>
   );

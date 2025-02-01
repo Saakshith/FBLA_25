@@ -16,7 +16,6 @@ nav {
 
 .nav-middle {
     display: flex;
-    gap: 1rem;
     flex-wrap: wrap;
     text-align: center;
 }
@@ -200,7 +199,7 @@ nav {
 }
 
 /* Mobile specific styles */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 900px) {
     .nav-middle, .nav-right {
         display: none;
     }

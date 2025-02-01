@@ -86,6 +86,7 @@ const FindJobs = () => {
 
   return (
     <div className="find-jobs">
+      <div>
       <NavbarMain />
       <div className="find-jobs-hero">
         <h1>Find Your Dream High School Jobs</h1>
@@ -110,6 +111,7 @@ const FindJobs = () => {
             <FindJobsCard key={job.id} job={job} />
           ))}
         </div>
+      </div>
       </div>
     </div>
   );
