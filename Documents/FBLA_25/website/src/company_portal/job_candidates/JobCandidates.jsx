@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../../firebase';
-import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 import CompanyNavbar from '../company_navbar/CompanyNavbar';
 import './JobCandidates.css';
 
@@ -56,15 +56,19 @@ const JobCandidates = () => {
     fetchJobAndCandidates();
   }, [jobId, navigate]);
 
-  const getStatusColor = (status) => {
-    const statusColors = {
-      'Pending': 'status-pending',
-      'Reviewing': 'status-reviewing',
-      'Interviewed': 'status-interviewed',
-      'Accepted': 'status-accepted',
-      'Rejected': 'status-rejected'
-    };
-    return statusColors[status] || 'status-pending';
+  const handleStatusChange = async (candidateId, newStatus) => {
+    try {
+      const applicationRef = doc(db, 'Applications', candidateId);
+      await updateDoc(applicationRef, { status: newStatus });
+
+      setCandidates((prevCandidates) =>
+        prevCandidates.map((candidate) =>
+          candidate.id === candidateId ? { ...candidate, status: newStatus } : candidate
+        )
+      );
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
   };
 
   if (isLoading) {
@@ -72,22 +76,24 @@ const JobCandidates = () => {
   }
 
   return (
+    <section className='candidates'>
     <div className="candidates-container">
       <CompanyNavbar />
       <div className="candidates-content">
-        <div className="candidates-header">
-          <button className="back-button" onClick={() => navigate(`/job/${jobId}`)}>
-            ← Back to Job
-          </button>
-          <h1>{job?.role || 'Job'} - Candidates</h1>
-        </div>
-
-        <div className="candidates-stats">
-          <div className="stat-item">
-            <span className="stat-number">{candidates.length}</span>
-            <span className="stat-label">Total Candidates</span>
+        <div className="candidate-upper">
+          <div className="candidates-header">
+            <button className="candidate-back-button" onClick={() => navigate(`/job/${jobId}`)}>
+              ← Back to Job
+            </button>
           </div>
-          {/* Add more stats as needed */}
+          <div className='candidate-title'><h1>{job?.role || 'Job'} - Candidates</h1></div>
+
+          <div className="candidates-stats">
+            <div className="stat-item">
+              <span className="stat-number">{candidates.length}</span>
+              <span className="stat-label">Total Candidates</span>
+            </div>
+          </div>
         </div>
 
         <div className="candidates-list">
@@ -110,9 +116,16 @@ const JobCandidates = () => {
                   <span className="application-date">
                     Applied {candidate.appliedDate.toLocaleDateString()}
                   </span>
-                  <span className={`application-status ${getStatusColor(candidate.status)}`}>
-                    {candidate.status}
-                  </span>
+                  <select
+                    className="status-dropdown"
+                    value={candidate.status}
+                    onChange={(e) => handleStatusChange(candidate.id, e.target.value)}
+                  >
+                    <option value="Pending" disabled>Pending</option>
+                    <option value="Interviewing">Interviewing</option>
+                    <option value="Accepted">Accepted</option>
+                    <option value="Denied">Denied</option>
+                  </select>
                 </div>
 
                 <div className="candidate-actions">
@@ -122,7 +135,7 @@ const JobCandidates = () => {
                   >
                     View Profile
                   </button>
-                  <button className="download-resume-button">
+                  <button className="download-resume-button" id='resume'>
                     Download Resume
                   </button>
                 </div>
@@ -136,7 +149,8 @@ const JobCandidates = () => {
         </div>
       </div>
     </div>
+    </section>
   );
 };
 
-export default JobCandidates; 
+export default JobCandidates;

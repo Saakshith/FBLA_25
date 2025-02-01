@@ -5,7 +5,8 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;  /* Position relative to allow absolute positioning of child elements */
+    position: relative;
+    background-color: var(--main-background-color);
 }
 
 /* Left, Middle, Right sections */
@@ -17,6 +18,7 @@ nav {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    text-align: center;
 }
 
 .nav-right {
@@ -66,67 +68,155 @@ nav {
     color: var(--light-grey);
 }
 
-/* Initially hide the menu elements off-screen */
-.nav-left, .nav-middle, .nav-right {
-    position: absolute;
-    top: 0;
-    right: -100%; /* Position off-screen to the right */
-    width: 50%; /* Adjust to 50% width of the screen */
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.3s ease-in-out; /* Smooth transition */
+/* Mobile menu button */
+.mobile-menu-button {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--white-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
 }
 
-/* When the active class is added, move the elements into view */
-nav.active .nav-left, nav.active .nav-middle, nav.active .nav-right {
-    transform: translateX(-100%); /* Move the sections into view */
+/* Mobile menu */
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: -100%; /* Start off-screen */
+    width: 50%; /* Take up half the screen */
+    height: 100%;
+    background-color: var(--dark-grey);
+    z-index: 1000;
+    padding: 1rem;
+    transition: right 0.3s ease-in-out;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-menu.active {
+    right: 0; /* Slide in from right */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mobile-menu-header {
+    display: flex;
+    justify-content: flex-end; /* Move close button to right */
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 0.5rem;
+}
+
+.mobile-menu-close {
+    background: none;
+    border: none;
+    color: var(--white-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* Mobile menu links */
+.mobile-menu .nav-middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+    width: 100%;
+}
+
+.mobile-menu .nav-middle a {
+    color: var(--white-color);
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.mobile-menu .nav-middle a:hover {
+    background-color: var(--darker-grey);
+}
+
+.mobile-menu .nav-right {
+    margin-top: auto; /* Push to bottom */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 2rem;
+    width: 100%;
+}
+
+.mobile-menu .profile {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+    width: 100%;
+}
+
+.mobile-menu .for-business {
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+}
+
+/* Overlay for mobile menu */
+.mobile-menu-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.mobile-menu-overlay.active {
+    display: block;
+}
+
+/* Desktop nav links */
+.nav-middle a {
+    color: var(--white-color);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.nav-middle a:hover {
+    background-color: var(--darker-grey);
+}
+
+.nav-right a {
+    text-decoration: none;
 }
 
 /* Mobile specific styles */
 @media only screen and (max-width: 768px) {
-    /* Hide the profile and business sections when the menu is open */
-    .profile, .for-business {
+    .nav-middle, .nav-right {
         display: none;
     }
 
-    .hamburger {
+    .mobile-menu-button {
+        display: block;
+    }
+
+    .mobile-menu.active {
         display: flex;
-        cursor: pointer;
-        flex-direction: column;
-        gap: 5px;
-    }
-
-    .hamburger-line {
-        width: 30px;
-        height: 3px;
-        background-color: var(--light-grey);
-        border-radius: 10px;
-    }
-
-    /* Display the menu when active */
-    nav.active .hamburger {
-        display: none; /* Hide hamburger when the menu is open */
-    }
-
-    /* Apply for the active class */
-    nav.active .nav-left, nav.active .nav-middle, nav.active .nav-right {
-        transform: translateX(0); /* Slide menu into view */
     }
 }
 
-/* For Desktop and larger screens */
+/* For larger screens */
 @media only screen and (min-width: 769px) {
-    /* Display the nav sections inline for desktop */
-    .nav-left, .nav-middle, .nav-right {
-        position: static;  /* Reset the position for desktop */
-        transform: none;  /* No need for transform effect */
-        width: auto;  /* Default width */
-        display: flex;  /* Display flex normally */
-    }
-
-    .hamburger {
-        display: none; /* Hide hamburger on desktop */
+    .mobile-menu, .mobile-menu-overlay {
+        display: none !important;
     }
 } 

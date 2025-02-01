@@ -1,81 +1,9 @@
-// import React, { useEffect, useState } from 'react'
-// import { Link } from 'react-router-dom'
-// import "./NavbarMain.css"
-// import nchsLogo from "../../images/nchs_logo.png"
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-// import { faBriefcase } from '@fortawesome/free-solid-svg-icons';
-// import sampleProfilePic from "../../images/sample_profile_picture.JPG"
-// import { doc, getDoc } from "firebase/firestore"
-// import { auth, db } from '../../firebase'
-
-// const NavbarMain = () => {
-//   const [userDetails, setUserDetails] = useState(null);
-
-//   const fetchUserData = async () => {
-//     auth.onAuthStateChanged(async (user) => {
-//       if (user) {
-//         try {
-//           const docRef = doc(db, "Users", user.uid);
-//           const docSnap = await getDoc(docRef);
-//           if (docSnap.exists()) {
-//             setUserDetails(docSnap.data());
-//           } else {
-//             console.log("No user data found");
-//           }
-//         } catch (error) {
-//           console.error("Error fetching user data:", error);
-//         }
-//       } else {
-//         console.log("User is not logged in");
-//       }
-//     });
-//   };
-
-//   useEffect(() => {
-//     fetchUserData();
-//   }, []);
-
-//   return (
-//     <nav>
-//       <div className="nav-left">
-//         <Link to="/"><img src={nchsLogo} alt="NCHS Logo" /></Link>
-//       </div>
-//       <div className="nav-middle">
-//         <Link to="/find-jobs" className="nav-link active">Find Jobs</Link>
-//         <Link to="/find-companies" className="nav-link">Find Companies</Link>
-//         <Link to="/find-people" className="nav-link">Find People</Link>
-//       </div>
-//       <div className="nav-right">
-//         <Link to="/for-business" className="for-business">
-//           <FontAwesomeIcon icon={faBriefcase} className="for-business-icon" />
-//           <p>For Business</p>
-//         </Link>
-//         <Link to="/profile" className='profile'>
-//           <img src={sampleProfilePic} alt="Profile" className="profile-icon" />
-//           {userDetails ? (
-//             <div className='profile-text'>
-//               <h3>{userDetails.firstName} {userDetails.lastName}</h3>
-//               <p>UI/UX Designer</p>
-//             </div>
-//           ) : (
-//             <div className='profile-text'>
-//               <h3>Guest</h3>
-//               <p>Welcome!</p>
-//             </div>
-//           )}
-//         </Link>
-//       </div>
-//     </nav>
-//   );
-// }
-
-// export default NavbarMain;
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import "./NavbarMain.css";
 import nchsLogo from "../../images/nchs_logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBriefcase } from '@fortawesome/free-solid-svg-icons';
+import { faBriefcase, faBars, faTimes, faBuilding } from '@fortawesome/free-solid-svg-icons';
 import sampleProfilePic from "../../images/sample_profile_picture.JPG";
 import { doc, getDoc, collection, query, where, getDocs, documentId } from "firebase/firestore";
 import { auth, db } from '../../firebase';
@@ -84,6 +12,7 @@ const NavbarMain = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [companies, setCompanies] = useState([]);
   const navigate = useNavigate(); // For programmatic navigation
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Fetch user data from Firestore and companies they're part of
   const fetchUserData = async () => {
@@ -152,38 +81,94 @@ const NavbarMain = () => {
     }
   };
   
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
-    <nav>
-      <div className="nav-left">
-        <Link to="/"><img src={nchsLogo} alt="NCHS Logo" /></Link>
-      </div>
-      <div className="nav-middle">
-        <Link to="/find-jobs" className="nav-link active">Find Jobs</Link>
-        <Link to="/find-companies" className="nav-link">Find Companies</Link>
-        <Link to="/find-people" className="nav-link">Find People</Link>
-      </div>
-      <div className="nav-right">
-        <div onClick={handleForBusinessClick} className="for-business">
-          <FontAwesomeIcon icon={faBriefcase} className="for-business-icon" />
-          <p>For Business</p>
+    <>
+      <nav>
+        <div className="nav-left">
+          <Link to="/"><img src={nchsLogo} alt="NCHS Logo" /></Link>
         </div>
-        <Link to="/profile" className='profile'>
-          <img src={sampleProfilePic} alt="Profile" className="profile-icon" />
-          {userDetails ? (
-            <div className='profile-text'>
-              <h3>{userDetails.firstName} {userDetails.lastName}</h3>
-              <p>UI/UX Designer</p>
-            </div>
-          ) : (
-            <div className='profile-text'>
-              <h3>Guest</h3>
-              <p>Welcome!</p>
-            </div>
-          )}
-        </Link>
+
+        <button className="mobile-menu-button" onClick={toggleMobileMenu}>
+          <FontAwesomeIcon icon={faBars} />
+        </button>
+
+        <div className="nav-middle">
+          <Link to="/find-jobs" className="nav-link active">Find Jobs</Link>
+          <Link to="/find-companies" className="nav-link">Find Companies</Link>
+          <Link to="/find-people" className="nav-link">Find People</Link>
+        </div>
+
+        <div className="nav-right">
+          <div onClick={handleForBusinessClick} className="for-business">
+            <FontAwesomeIcon icon={faBriefcase} className="for-business-icon" />
+            <p>For Business</p>
+          </div>
+          <Link to="/profile" className='profile'>
+            <img src={sampleProfilePic} alt="Profile" className="profile-icon" />
+            {userDetails ? (
+              <div className='profile-text'>
+                <h3>{userDetails.firstName} {userDetails.lastName}</h3>
+                <p>UI/UX Designer</p>
+              </div>
+            ) : (
+              <div className='profile-text'>
+                <h3>Guest</h3>
+                <p>Welcome!</p>
+              </div>
+            )}
+          </Link>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <div 
+        className={`mobile-menu-overlay ${isMobileMenuOpen ? 'active' : ''}`}
+        onClick={toggleMobileMenu}
+      />
+
+      {/* Mobile Menu */}
+      <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
+        <div className="mobile-menu-header">
+          <Link to="/">
+            <img src={nchsLogo} alt="NCHS Logo" style={{ height: '50px' }} />
+          </Link>
+          <button className="mobile-menu-close" onClick={toggleMobileMenu}>
+            <FontAwesomeIcon icon={faTimes} />
+          </button>
+        </div>
+        
+        <div className="nav-middle">
+          <Link to="/find-jobs" onClick={toggleMobileMenu}>Find Jobs</Link>
+          <Link to="/find-companies" onClick={toggleMobileMenu}>Find Companies</Link>
+          <Link to="/find-people" onClick={toggleMobileMenu}>Find People</Link>
+        </div>
+
+        <div className="nav-right">
+          <div onClick={handleForBusinessClick} className="for-business" onClick={toggleMobileMenu}>
+            <FontAwesomeIcon icon={faBriefcase} className="for-business-icon" />
+            <p>For Business</p>
+          </div>
+          <Link to="/profile" className='profile' onClick={toggleMobileMenu}>
+            <img src={sampleProfilePic} alt="Profile" className="profile-icon" />
+            {userDetails ? (
+              <div className='profile-text'>
+                <h3>{userDetails.firstName} {userDetails.lastName}</h3>
+                <p>UI/UX Designer</p>
+              </div>
+            ) : (
+              <div className='profile-text'>
+                <h3>Guest</h3>
+                <p>Welcome!</p>
+              </div>
+            )}
+          </Link>
+        </div>
       </div>
-    </nav>
+    </>
   );
 }
 

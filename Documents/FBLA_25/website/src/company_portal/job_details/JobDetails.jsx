@@ -49,16 +49,9 @@ const JobDetails = () => {
       if (editedJob.description !== job.description) updates.description = editedJob.description;
       if (editedJob.location !== job.location) updates.location = editedJob.location;
       if (editedJob.workType !== job.workType) updates.workType = editedJob.workType;
+      if (editedJob.status !== job.status) updates.status = editedJob.status;
       if (Number(editedJob.minSalary) !== job.minSalary) updates.minSalary = Number(editedJob.minSalary);
       if (Number(editedJob.maxSalary) !== job.maxSalary) updates.maxSalary = Number(editedJob.maxSalary);
-
-      // If job was previously closed, set status to Pending and remove rejection reason
-      if (job.status === 'Closed') {
-        updates.status = 'Pending';
-        updates.rejectionReason = null;
-      } else if (editedJob.status !== job.status) {
-        updates.status = editedJob.status;
-      }
 
       if (Object.keys(updates).length > 0) {
         await updateDoc(jobRef, updates);
@@ -197,7 +190,7 @@ const JobDetails = () => {
                 </div>
               </div>
               <div className="edit-actions">
-                <button className="cancel-button" onClick={() => setIsEditing(false)}>
+                <button className="edit-cancel-button" id="cancel" onClick={() => setIsEditing(false)}>
                   Cancel
                 </button>
                 <button className="save-button" onClick={handleSave}>

@@ -189,6 +189,10 @@ const CompanySidebar = ({ userId, companies, setSelectedCompany, selectedCompany
     setSelectedCompany(company);
     navigate(`/companyportal/${company.id}`); // Navigate dynamically with companyId
   };
+  
+  const handleCreateCompany = () => {
+    navigate('/createcompany');
+  };
 
   return (
     <nav className='company-sidebar'>
@@ -204,8 +208,8 @@ const CompanySidebar = ({ userId, companies, setSelectedCompany, selectedCompany
         ))}
       </div>
 
-      <Link className="plus-container" onClick={() => navigate('/create-company')}>
-        <FontAwesomeIcon icon={faPlus} className='plus-sign'/>
+      <Link className="plus-container" onClick={handleCreateCompany}>
+        <FontAwesomeIcon icon={faPlus} className='plus-sign' />
       </Link>
     </nav>
   );

@@ -152,7 +152,7 @@ const CreateJobPopup = ({ isOpen, closePopup, companyId, createdBy }) => {
 
           <div className="form-actions">
             <button 
-              className="cancel-button" 
+              className="popup-cancel-button" 
               onClick={closePopup}
               type="button"
             >

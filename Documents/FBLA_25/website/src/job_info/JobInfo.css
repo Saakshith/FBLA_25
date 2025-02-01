@@ -1,0 +1,153 @@
+.job-info-page {
+  height: fit-content;
+  background-color: var(--main-background-color);
+}
+
+.job-info-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.job-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--dark-grey);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  font-family: var(--accent-font);
+}
+
+.job-info-company {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.company-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.company-info h1 {
+  color: var(--white-color);
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
+}
+
+.company-info h2 {
+  color: var(--light-grey);
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: normal;
+}
+
+.apply-button {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.apply-button:hover {
+  opacity: 0.9;
+}
+
+.apply-button.applied {
+  background-color: var(--light-grey);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.apply-button:disabled {
+  cursor: not-allowed;
+}
+
+.apply-button:disabled:hover{
+    transform: none;
+}
+
+.job-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detail-item {
+  background-color: var(--dark-grey);
+  padding: 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.detail-item svg {
+  color: var(--black-color);
+  font-size: 1.2rem;
+  margin-top: 0.25rem;
+}
+
+.detail-item h3 {
+  color: var(--light-grey);
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  font-weight: normal;
+}
+
+.detail-item p {
+  color: var(--white-color);
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.job-description, .company-section {
+  background-color: var(--dark-grey);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.job-description h2, .company-section h2 {
+  color: var(--white-color);
+  margin: 0 0 1.5rem 0;
+  font-size: 1.4rem;
+  font-family: var(--accent-font);
+}
+
+.description-content {
+  color: var(--light-grey);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.company-section p {
+  color: var(--light-grey);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .job-info-header {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .job-info-company {
+    flex-direction: column;
+  }
+
+  .detail-item {
+    padding: 1rem;
+  }
+}

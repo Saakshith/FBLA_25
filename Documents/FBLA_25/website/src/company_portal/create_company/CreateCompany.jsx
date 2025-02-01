@@ -1,20 +1,31 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { db, auth } from '../../firebase';
+import { db, storage, auth } from '../../firebase';
 import { collection, addDoc, doc } from 'firebase/firestore';
-import './CreateCompany.css'; // Import the CSS file for styling
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import './CreateCompany.css';
 import NavbarMain from '../../find_jobs/navbar_main/NavbarMain';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCloudUpload, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const CreateCompany = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
-    companyName: '',
+    name: '',
     industry: '',
-    locationCity: '',
-    locationState: '',
-    logoUrl: ''
+    location: '',
+    websiteUrl: '',
+    about: ''
   });
+
+  // Logo states
+  const [logoFile, setLogoFile] = useState(null);
+  const [logoPreview, setLogoPreview] = useState(null);
+
+  // Company images states
+  const [companyImages, setCompanyImages] = useState([]);
+  const [imagePreview, setImagePreview] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,6 +33,58 @@ const CreateCompany = () => {
       ...prevState,
       [name]: value
     }));
+  };
+
+  const handleLogoSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        alert('Please upload an image file');
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File size should be less than 5MB');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        setLogoPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+      setLogoFile(file);
+    }
+  };
+
+  const handleImageSelect = (e) => {
+    const files = Array.from(e.target.files);
+    if (companyImages.length + files.length > 6) {
+      alert('Maximum 6 images allowed');
+      return;
+    }
+
+    files.forEach(file => {
+      if (!file.type.startsWith('image/')) {
+        alert('Please upload image files only');
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Each file should be less than 5MB');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(prev => [...prev, reader.result]);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    setCompanyImages(prev => [...prev, ...files]);
+  };
+
+  const removeImage = (index) => {
+    setCompanyImages(prev => prev.filter((_, i) => i !== index));
+    setImagePreview(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
@@ -36,24 +99,41 @@ const CreateCompany = () => {
     try {
       setIsSubmitting(true);
 
+      // Upload logo
+      let logoUrl = '';
+      if (logoFile) {
+        const logoRef = ref(storage, `company-logos/${auth.currentUser.uid}/${Date.now()}-${logoFile.name}`);
+        await uploadBytes(logoRef, logoFile);
+        logoUrl = await getDownloadURL(logoRef);
+      }
+
+      // Upload company images
+      const imageUrls = [];
+      for (const image of companyImages) {
+        const imageRef = ref(storage, `company-images/${auth.currentUser.uid}/${Date.now()}-${image.name}`);
+        await uploadBytes(imageRef, image);
+        const url = await getDownloadURL(imageRef);
+        imageUrls.push(url);
+      }
+
+      // Create user reference
+      const userRef = doc(db, 'Users', auth.currentUser.uid);
+
+      // Create company document
       const companyData = {
-        name: formData.companyName,
-        industry: formData.industry,
-        location: `${formData.locationCity}, ${formData.locationState}`,
-        logoUrl: formData.logoUrl,
-        teamMembers: [doc(db, 'Users', auth.currentUser.uid)], // Add current user as team member
+        ...formData,
+        logoUrl,
+        images: imageUrls,
+        createdBy: userRef,
         createdAt: new Date(),
-        createdBy: doc(db, 'Users', auth.currentUser.uid)
+        teamMembers: [userRef]
       };
 
-      const docRef = await addDoc(collection(db, 'Companies'), companyData);
-      console.log('Company created with ID:', docRef.id);
-      
-      // Navigate to company portal with the new company ID
-      navigate(`/companyportal/${docRef.id}`);
+      await addDoc(collection(db, 'Companies'), companyData);
+      navigate(`/companyportal/companyData/${companyData.id}`);
     } catch (error) {
       console.error('Error creating company:', error);
-      alert('Failed to create company. Please try again.');
+      alert('Error creating company. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -68,111 +148,131 @@ const CreateCompany = () => {
         </div>
         <div className="create-company-form-container">
           <form className="create-company-form" onSubmit={handleSubmit}>
-            <div className="create-company-form-row">
-              <label>Company Name</label>
-              <input
-                required
-                type="text"
-                name="companyName"
-                placeholder="Enter company name"
-                value={formData.companyName}
-                onChange={handleChange}
-              />
+            <div className="form-grid">
+              <div className="form-left">
+                <div className="form-section">
+                  <h2>Basic Information</h2>
+                  <div className="create-company-form-row">
+                    <label>Company Name</label>
+                    <input
+                      required
+                      type="text"
+                      name="name"
+                      placeholder="Enter company name"
+                      value={formData.name}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="create-company-form-row">
+                    <label>Industry</label>
+                    <input
+                      required
+                      type="text"
+                      name="industry"
+                      placeholder="Enter industry"
+                      value={formData.industry}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="create-company-form-row">
+                    <label>Website URL</label>
+                    <input
+                      type="url"
+                      name="websiteUrl"
+                      placeholder="https://www.example.com"
+                      value={formData.websiteUrl}
+                      onChange={handleChange}
+                      pattern="https?://.*"
+                      title="Please include http:// or https://"
+                    />
+                  </div>
+                  <div className="create-company-form-row">
+                    <label>Location</label>
+                    <input
+                      required
+                      type="text"
+                      name="location"
+                      placeholder="City, State"
+                      value={formData.location}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+
+                <div className="form-section">
+                  <h2>Company Description</h2>
+                  <div className="create-company-form-row">
+                    <label>About</label>
+                    <textarea
+                      required
+                      name="about"
+                      placeholder="Tell us about your company..."
+                      value={formData.about}
+                      onChange={handleChange}
+                      rows={6}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-right">
+                <div className="form-section">
+                  <h2>Company Logo</h2>
+                  <div className="logo-upload-container">
+                    <input
+                      type="file"
+                      id="logo-upload"
+                      accept="image/*"
+                      onChange={handleLogoSelect}
+                      style={{ display: 'none' }}
+                    />
+                    <label htmlFor="logo-upload" className="logo-upload-area">
+                      {logoPreview ? (
+                        <img src={logoPreview} alt="Logo preview" className="logo-preview" />
+                      ) : (
+                        <>
+                          <FontAwesomeIcon icon={faCloudUpload} className="upload-icon" />
+                          <p>Upload company logo (50x50px)</p>
+                        </>
+                      )}
+                    </label>
+                  </div>
+                </div>
+
+                <div className="form-section">
+                  <h2>Company Images</h2>
+                  <div className="images-upload-container">
+                    <input
+                      type="file"
+                      id="images-upload"
+                      accept="image/*"
+                      multiple
+                      onChange={handleImageSelect}
+                      style={{ display: 'none' }}
+                    />
+                    <label htmlFor="images-upload" className="images-upload-area">
+                      <FontAwesomeIcon icon={faCloudUpload} className="upload-icon" />
+                      <p>Upload company images (max 6)</p>
+                    </label>
+                    <div className="image-previews">
+                      {imagePreview.map((preview, index) => (
+                        <div key={index} className="image-preview-container">
+                          <img src={preview} alt={`Preview ${index + 1}`} />
+                          <button
+                            type="button"
+                            className="remove-image"
+                            onClick={() => removeImage(index)}
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="create-company-form-row">
-              <label>Industry</label>
-              <input
-                required
-                type="text"
-                name="industry"
-                placeholder="Enter industry"
-                value={formData.industry}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="create-company-form-row">
-              <label>Location City</label>
-              <input
-                required
-                type="text"
-                name="locationCity"
-                placeholder="Enter city"
-                value={formData.locationCity}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="create-company-form-row">
-              <label>Location State</label>
-              <select
-                name="locationState"
-                required
-                value={formData.locationState}
-                onChange={handleChange}
-              >
-                <option value="">--Select State--</option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="CO">Colorado</option>
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="HI">Hawaii</option>
-                <option value="ID">Idaho</option>
-                <option value="IL">Illinois</option>
-                <option value="IN">Indiana</option>
-                <option value="IA">Iowa</option>
-                <option value="KS">Kansas</option>
-                <option value="KY">Kentucky</option>
-                <option value="LA">Louisiana</option>
-                <option value="ME">Maine</option>
-                <option value="MD">Maryland</option>
-                <option value="MA">Massachusetts</option>
-                <option value="MI">Michigan</option>
-                <option value="MN">Minnesota</option>
-                <option value="MS">Mississippi</option>
-                <option value="MO">Missouri</option>
-                <option value="MT">Montana</option>
-                <option value="NE">Nebraska</option>
-                <option value="NV">Nevada</option>
-                <option value="NH">New Hampshire</option>
-                <option value="NJ">New Jersey</option>
-                <option value="NM">New Mexico</option>
-                <option value="NY">New York</option>
-                <option value="NC">North Carolina</option>
-                <option value="ND">North Dakota</option>
-                <option value="OH">Ohio</option>
-                <option value="OK">Oklahoma</option>
-                <option value="OR">Oregon</option>
-                <option value="PA">Pennsylvania</option>
-                <option value="RI">Rhode Island</option>
-                <option value="SC">South Carolina</option>
-                <option value="SD">South Dakota</option>
-                <option value="TN">Tennessee</option>
-                <option value="TX">Texas</option>
-                <option value="UT">Utah</option>
-                <option value="VT">Vermont</option>
-                <option value="VA">Virginia</option>
-                <option value="WA">Washington</option>
-                <option value="WV">West Virginia</option>
-                <option value="WI">Wisconsin</option>
-                <option value="WY">Wyoming</option>
-              </select>
-            </div>
-            <div className="create-company-form-row">
-              <label>Logo URL</label>
-              <input
-                required
-                type="url"
-                name="logoUrl"
-                placeholder="Enter logo URL"
-                value={formData.logoUrl}
-                onChange={handleChange}
-              />
-            </div>
+
             <button 
               className="create-company-button" 
               type="submit"

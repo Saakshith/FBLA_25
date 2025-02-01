@@ -55,6 +55,23 @@ const CompanyJobCard = ({ job }) => {
     }
   };
 
+  const calculateProgress = () => {
+    if (!postTime?.seconds || !endTime?.seconds) return 0;
+    
+    const now = new Date().getTime();
+    const start = new Date(postTime.seconds * 1000).getTime();
+    const end = new Date(endTime.seconds * 1000).getTime();
+    
+    if (now > end) return 100;
+    if (now < start) return 0;
+    
+    const total = end - start;
+    const current = now - start;
+    const progress = (current / total) * 100;
+    
+    return Math.min(Math.max(progress, 0), 100);
+  };
+
   return (
     <div className='company-job-card'>
       <div className="company-job-card-top">
@@ -85,7 +102,8 @@ const CompanyJobCard = ({ job }) => {
             to={`/job/${job.id}/candidates`}
             data-count={job.applicants || 0}
           >
-            Candidates Applied
+            <h3 className='company-job-card-applicants'>{job.applicants || 0}</h3>
+            <p>Candidates Applied</p>
           </Link>
           <Link 
             className="company-job-card-interview-container"
@@ -104,7 +122,14 @@ const CompanyJobCard = ({ job }) => {
             Ends on: {formattedEndTime}
           </div>
         </div>
-        <div className="company-job-card-progress-bar"></div>
+        <div className="company-job-card-progress-bar">
+          <div 
+            className="company-job-card-progress-fill"
+            style={{
+              width: `${calculateProgress()}%`
+            }}
+          />
+        </div>
       </div>
       <div className="company-job-card-bottom">
         <div className="company-job-card-bottom-main">

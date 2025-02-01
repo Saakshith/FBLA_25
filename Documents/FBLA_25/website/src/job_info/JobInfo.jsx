@@ -1,77 +1,164 @@
-// import { useEffect, useState } from 'react';
-// import { doc, getDoc } from 'firebase/firestore';
-// import { db } from '../../firebase'; // Adjust path as needed
-// import Navbar from "../../navbar/navbar";
-// import "./jobInfo.css";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
-// import { useParams, useNavigate } from 'react-router-dom';
-// import FroalaView from 'react-froala-wysiwyg/FroalaEditorView';
-// import LoadingPage from '../../loading/LoadingPage';
+import React, { useEffect, useState } from 'react';
+import { doc, getDoc, collection, query, where, getDocs, getCountFromServer } from 'firebase/firestore';
+import { db, auth } from '../firebase';
+import { useParams, useNavigate } from 'react-router-dom';
+import NavbarMain from '../find_jobs/navbar_main/NavbarMain';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLocationDot, faClock, faDollarSign, faBriefcase, faUsers } from '@fortawesome/free-solid-svg-icons';
+import "./JobInfo.css";
 
-// const JobInfo = () => {
-//   const { jobId } = useParams();
-//   const [job, setJob] = useState(null);
-//   const navigate = useNavigate();
+const JobInfo = () => {
+  const { jobId } = useParams();
+  const navigate = useNavigate();
+  const [job, setJob] = useState(null);
+  const [companyDetails, setCompanyDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [applicantsCount, setApplicantsCount] = useState(0);
+  const [hasApplied, setHasApplied] = useState(false);
 
-//   useEffect(() => {
-//     const fetchJob = async () => {
-//       const jobRef = doc(db, 'Jobs', jobId);
-//       const jobSnapshot = await getDoc(jobRef);
-//       if (jobSnapshot.exists()) {
-//         setJob(jobSnapshot.data());
-//       } else {
-//         console.log('No such job!');
-//       }
-//     };
+  useEffect(() => {
+    const fetchJobAndCompany = async () => {
+      try {
+        const jobRef = doc(db, 'Jobs', jobId);
+        const jobDoc = await getDoc(jobRef);
+        
+        if (jobDoc.exists()) {
+          const jobData = jobDoc.data();
 
-//     fetchJob();
-//   }, [jobId]);
+          // Get application count for this job
+          const applicationsQuery = query(
+            collection(db, "Applications"),
+            where("jobId", "==", jobRef)
+          );
+          const applicationsSnapshot = await getCountFromServer(applicationsQuery);
+          setApplicantsCount(applicationsSnapshot.data().count);
+          
+          setJob(jobData);
+          
+          // Fetch company details
+          const companyDoc = await getDoc(jobData.companyId);
+          if (companyDoc.exists()) {
+            setCompanyDetails(companyDoc.data());
+          }
 
-//   if (!job) {
-//     return <LoadingPage message='Loading...'/>;
-//   }
+          // Check if current user has applied
+          if (auth.currentUser) {
+            const userApplicationQuery = query(
+              collection(db, "Applications"),
+              where("jobId", "==", jobRef),
+              where("userId", "==", doc(db, "Users", auth.currentUser.uid))
+            );
+            const userApplicationSnapshot = await getDocs(userApplicationQuery);
+            setHasApplied(!userApplicationSnapshot.empty);
+          }
+        } else {
+          console.error('Job not found');
+          navigate('/jobs');
+        }
+      } catch (error) {
+        console.error('Error fetching job details:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-//   // Safely access applicants and default to 0 if not available
-//   const applicantsCount = Array.isArray(job.applicants) ? job.applicants.length : 0;
+    fetchJobAndCompany();
+  }, [jobId, navigate]);
 
-//   return (
-//     <div>
-//       <Navbar />
-//       <div className="job-info">
-//         <div className="job-info-title-apply-container">
-//           <h1 className="job-info-title">{job.title}</h1>
-//           <button
-//             className="job-info-apply-button"
-//             onClick={() => navigate(`/jobs/jobInfo/${jobId}/apply`)}
-//           >
-//             Apply
-//           </button>
-//         </div>
-//         <div className="job-info-company-details-container">
-//           <div className="job-info-company-logo-container">
-//             <img src={job.logoURL} alt="" />
-//             <h3>{job.company}</h3>
-//           </div>
-//           <div className="job-info-company-details">
-//             <div className="job-info-company-detail">
-//               <FontAwesomeIcon icon={faLocationDot} />
-//               <p>{job.locationCity}, {job.locationState}</p>
-//             </div>
-//             <div className="job-info-company-detail">
-//               <p>${job.payMin} - ${job.payMax} per hour</p>
-//             </div>
-//             <div className="job-info-company-detail">
-//               <p>{applicantsCount} Applicants</p> {/* Safely use applicantsCount */}
-//             </div>
-//           </div>
-//         </div>
-//         <div className="job-info-description">
-//           <FroalaView model={job.description}/>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
+  if (loading || !job || !companyDetails) {
+    return <div className="loading">Loading...</div>;
+  }
 
-// export default JobInfo;
+  const formattedPostTime = job.postTime?.seconds ? 
+    new Date(job.postTime.seconds * 1000).toLocaleDateString() : 'N/A';
+  
+  const formattedEndTime = job.endTime?.seconds ? 
+    new Date(job.endTime.seconds * 1000).toLocaleDateString() : 'N/A';
+
+  return (
+    <div className="job-info-page">
+      <NavbarMain />
+      <div className="job-info-container">
+        <div className="job-info-header">
+          <div className="job-info-company">
+            <img 
+              src={companyDetails.logoUrl || '/default-logo.png'} 
+              alt={companyDetails.name} 
+              className="company-logo"
+            />
+            <div className="company-info">
+              <h1>{job.role}</h1>
+              <h2>{companyDetails.name}</h2>
+            </div>
+          </div>
+          <button 
+            className={`apply-button ${hasApplied ? 'applied' : ''}`}
+            onClick={() => !hasApplied && navigate(`/jobs/${jobId}/apply`)}
+            disabled={hasApplied}
+          >
+            {hasApplied ? 'Applied' : 'Apply Now'}
+          </button>
+        </div>
+
+        <div className="job-details-grid">
+          <div className="detail-item">
+            <FontAwesomeIcon icon={faLocationDot} />
+            <div>
+              <h3>Location</h3>
+              <p>{job.location}</p>
+            </div>
+          </div>
+          <div className="detail-item">
+            <FontAwesomeIcon icon={faDollarSign} />
+            <div>
+              <h3>Salary Range</h3>
+              <p>${job.salaryMin} - ${job.salaryMax} per hour</p>
+            </div>
+          </div>
+          <div className="detail-item">
+            <FontAwesomeIcon icon={faBriefcase} />
+            <div>
+              <h3>Job Type</h3>
+              <p>{job.type}</p>
+            </div>
+          </div>
+          <div className="detail-item">
+            <FontAwesomeIcon icon={faUsers} />
+            <div>
+              <h3>Applicants</h3>
+              <p>{applicantsCount} Applied</p>
+            </div>
+          </div>
+          <div className="detail-item">
+            <FontAwesomeIcon icon={faClock} />
+            <div>
+              <h3>Posted Date</h3>
+              <p>{formattedPostTime}</p>
+            </div>
+          </div>
+          <div className="detail-item">
+            <FontAwesomeIcon icon={faClock} />
+            <div>
+              <h3>Application Deadline</h3>
+              <p>{formattedEndTime}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="job-description">
+          <h2>Job Description</h2>
+          <div className="description-content">
+            {job.description}
+          </div>
+        </div>
+
+        <div className="company-section">
+          <h2>About {companyDetails.name}</h2>
+          <p>{companyDetails.about}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default JobInfo;

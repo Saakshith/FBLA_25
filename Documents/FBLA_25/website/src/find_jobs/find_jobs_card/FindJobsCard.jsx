@@ -4,11 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { getDoc, doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { auth, db } from "../../firebase";
+import { useNavigate } from "react-router-dom";
 
 const FindJobsCard = ({ job }) => {
   const [companyLogo, setCompanyLogo] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [isLiked, setIsLiked] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCompanyDetails = async () => {
@@ -72,8 +74,19 @@ const FindJobsCard = ({ job }) => {
 
   const formattedPostTime = job.postTime?.seconds ? new Date(job.postTime.seconds * 1000).toLocaleDateString() : 'N/A';
      
+  const handleCardClick = (e) => {
+    if (e.target.closest('.like-button')) {
+      return;
+    }
+    navigate(`/jobinfo/${job.id}`);
+  };
+
   return (
-    <div className="find-jobs-card">
+    <div 
+      className="find-jobs-card"
+      onClick={handleCardClick}
+      style={{ cursor: 'pointer' }}
+    >
       <div className="find-jobs-card-left">
         <img 
           src={companyLogo || '/default-logo.png'} 

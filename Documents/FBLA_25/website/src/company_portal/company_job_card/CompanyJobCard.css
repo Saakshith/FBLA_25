@@ -67,6 +67,11 @@
     border-radius: 5px;
 }
 
+.company-job-card-interview-applicants p{
+  color: var(--white-color);
+  text-decoration: none;
+}
+
 .company-job-card-applicants-container{
     color: var(--white-color);
     padding-right: 1rem;
@@ -77,6 +82,11 @@
 .company-job-card-applicants{
     font-size: 1.5rem;
     font-family: var(--accent-font);
+    color: var(--white-color);
+}
+
+.company-job-card-interview-applicants p{
+    padding-right: 1rem;
 }
 
 .company-job-card-interview-container{
@@ -108,9 +118,26 @@
     font-weight: bold;
 }
 
-.company-job-card-progress-bar{
-    height: 10px;
-    background-color: var(--white-color);
+.company-job-card-progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: var(--white-color);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.company-job-card-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(to right, 
+    var(--green-color) 0%,
+    #4CAF50 100%
+  );
+  border-radius: 2px;
+  transition: width 0.3s ease;
 }
 
 .company-job-card-bottom {

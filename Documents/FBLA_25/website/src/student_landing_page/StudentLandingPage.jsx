@@ -15,6 +15,8 @@ import subwayLogo from '../images/subway_logo.png';
 import tacoBellLogo from '../images/taco_bell_logo.png';
 import wendysLogo from '../images/wendys_logo.png';
 
+import { useNavigate } from 'react-router-dom';
+
 const StudentLandingPage = () => {
     const scrollContainerRef = useRef(null);
     const scrollSpeed = 1; // Adjust speed here
@@ -81,6 +83,10 @@ const StudentLandingPage = () => {
     const toggleAccordion = (index) => {
       setActiveIndex(activeIndex === index ? null : index);
     };  
+
+    const navigateToCompanyLandingPage = () => {
+      window.location.href = '/companylandingpage';
+    };
   
 
   return (
@@ -92,7 +98,7 @@ const StudentLandingPage = () => {
           <p className="hero-description">User-friendly job search application and known for our amazing commitment to our students</p>
           <div className="hero-button-container">
             <button className="primary-cta">Find Jobs</button>
-            <button className="secondary-cta">For Companies</button>
+            <button className="secondary-cta" onClick={navigateToCompanyLandingPage}>For Companies</button>
           </div>
           <img className="hero-img" src={heroImg} alt="" />
         </div>

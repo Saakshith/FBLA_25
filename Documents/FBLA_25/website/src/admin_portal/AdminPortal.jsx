@@ -148,7 +148,7 @@ const AdminPortal = () => {
         <div className="find-jobs-hero-bottom">
           <input
             type="text"
-            placeholder="Search by role, company, location..."
+            placeholder=""
             value={searchTerm}
             onChange={handleSearch}
           />

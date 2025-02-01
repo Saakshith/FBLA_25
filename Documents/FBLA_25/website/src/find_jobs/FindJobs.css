@@ -62,7 +62,7 @@
     }
 
     .filter-search{
-        width: 100%;
+        width: 80%;
     }
 
     .find-jobs-hero p,
@@ -72,5 +72,19 @@
 
     .find-jobs-hero h1{
         padding-bottom: 0.5rem;
+    }
+
+    .salary-slider{
+        width: 85%;
+    }
+
+    .find-jobs{
+        width: fit-content;
+        overflow-x:hidden ;
+        padding-bottom: 1rem;
+    }
+
+    .find-jobs-card-container{
+        padding-left: 4.5vh;
     }
   }

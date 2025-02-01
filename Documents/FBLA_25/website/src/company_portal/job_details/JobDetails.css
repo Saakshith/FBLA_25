@@ -1,6 +1,6 @@
 .job-details-container {
-  min-height: 100vh;
-  background-color: var(--primary-black);
+  height: fit-content;
+  background-color: var(--main-background-color);
   color: var(--primary-white);
 }
 
@@ -210,7 +210,7 @@
   margin-top: 2rem;
 }
 
-.cancel-button,
+#cancel,
 .save-button{
   background-color: var(--accent-color);
   color: white;
@@ -223,7 +223,7 @@
   width: 50%;
 }
 
-.cancel-button:hover,
+#cancel:hover,
 .save-button:hover {
   background-color: #5a36cc; 
 }
@@ -269,7 +269,7 @@
     padding: 0.5rem 1rem;
   }
 
-  .cancel-button,
+  #cancel,
   .save-button{
     width: 100%;
   }

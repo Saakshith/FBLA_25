@@ -1,202 +1,183 @@
-
-.apply{
-    background-color: var(--main-background-color);
-    overflow: hidden;
+.application-page {
+  min-height: 100vh;
+  background-color: var(--main-background-color);
 }
 
-.main{
-    overflow: hidden;
+.application-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
-.apply-main{
-    background-color: var(--main-background-color);
+.application-content {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
-.apply-left{
-    overflow: hidden;
+.application-left {
+  flex: 1;
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
 }
 
-.apply-title-container{
-    text-align: center;
-    font-size: 2rem;
-    font-family: var(--accent-font);
-    color: white;
+.job-overview {
+  background-color: var(--dark-grey);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.apply-form-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.job-overview h2 {
+  color: var(--white-color);
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  font-family: var(--accent-font);
 }
 
-.apply-form{
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 90%
+.job-overview-detail {
+  margin-bottom: 1.25rem;
 }
 
-
-.apply-form-row{
-    display: flex;
-    flex-direction: column;
-    color: var(--white-color);
-    font-size: 14px;
-    width: 100%;
+.job-overview-detail:last-child {
+  margin-bottom: 0;
 }
 
-.apply-form-row input{
-    padding: 0.5rem 1rem;
-    background-color: var(--main-background-color);
-    color: var(--white-color);
+.job-overview-detail h3 {
+  color: var(--light-grey);
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: normal;
 }
 
-input{
-    border: 1px solid var(--light-grey);
+.job-overview-detail p {
+  color: var(--white-color);
+  margin: 0;
+  font-size: 1.1rem;
 }
 
-.apply-form-row-split-container{
-    display: flex;
+.application-right {
+  flex: 1.5;
 }
 
-.apply-form-row-split{
-    display: flex;
-    flex-direction: column;
+.application-form-container {
+  background-color: var(--dark-grey);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.apply-form-row-split input{
-    padding: 0.5rem 1rem;
-    background-color: var(--main-background-color);
-    color: var(--white-color);
+.application-form-container h1 {
+  color: var(--white-color);
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
+  font-family: var(--accent-font);
 }
 
-.apply-form-row-split label{
-    color: white;
+.form-subtitle {
+  color: var(--light-grey);
+  margin: 0 0 2rem 0;
+  font-size: 0.9rem;
 }
 
-#state{
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--light-grey);   
-    color: var(--light-color);
+.resume-upload-section {
+  margin-bottom: 2rem;
 }
 
-#state option{
-    color: white;
+.upload-container {
+  border: 2px dashed var(--light-grey);
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
 }
 
-.apply-form-row-split-container {
-    display: flex;
-    gap: 1rem;
+.upload-container:hover {
+  border-color: var(--primary-color);
 }
 
-.apply-form-row-split {
-    display: flex;
-    flex-direction: column;
+.upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem;
+  cursor: pointer;
+  text-align: center;
 }
 
-.apply-form-row-split:first-child { 
-    width: 30%; 
+.upload-icon {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
 }
 
-.apply-form-row-split:nth-child(2) { 
-    width: 40%; 
+.upload-text {
+  color: var(--white-color);
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
 }
 
-.apply-form-row-split:last-child { 
-    width: 22%; 
+.upload-requirements {
+  color: var(--light-grey);
+  margin: 0;
+  font-size: 0.8rem;
 }
 
-.job-info-apply-button{
-    background-color: var(--accent-color);
-    padding: 1rem 5rem;
-    font-size: 1rem;
-    color: var(--white-color);
-    text-decoration: none;
-    border: none;
-}
-
-@media only screen and (max-width: 1000px){
-    .apply-form-container{
-        width: 100%;
-    }
-    .apply-form{
-        width: 95%;
-        padding: 2rem 0;
-    }
-}
-
-.apply-form-row-split label {
-    color: white;
-}
-  
-.apply-form-row-split select {
-    background-color: transparent; 
-    color: white;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid var(--light-grey);
-}
-
-
-.apply-form-row-split select option {
-    background-color: var(--main-background-color);
-    color: white;
-}
-
-.main{
-    display: flex;
-}
-
-.job-info-apply-button {
+.submit-application-button {
+  width: 100%;
   background-color: var(--accent-color);
   color: white;
-  padding: 1rem 2rem;
   border: none;
-  border-radius: 5px;
+  padding: 1rem;
+  border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: opacity 0.2s ease;
 }
 
-.job-info-apply-button:hover {
-  background-color: #5a36cc; 
+.submit-application-button:hover {
+  opacity: 0.9;
 }
 
-.apply-left{
-    width: 50%;
+.submit-application-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.apply-right{
-    padding:0 var(--default-spacing);
-}
-
-.apply-left img{
-    height: 80%;
-}
-
-.custom-file-upload {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+@media (max-width: 1024px) {
+  .application-content {
+    flex-direction: column;
   }
-  
-  .file-upload-button {
-    background-color: var(--accent-color);
-    color: white;
-    padding: 0.7rem 1.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+
+  .application-left {
+    position: static;
   }
-  
-  .file-upload-button:hover {
-    background-color: #5a36cc; 
-    border: none;
+
+  .application-right {
+    flex: 1;
   }
-  
-  .file-name {
-    color: var(--white-color);
-    font-size: 0.9rem;
-    font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .application-container {
+    padding: 1rem;
   }
+
+  .application-form-container,
+  .job-overview {
+    padding: 1.5rem;
+  }
+
+  .upload-area {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .application-form-container h1 {
+    font-size: 1.5rem;
+  }
+
+  .upload-icon {
+    font-size: 2rem;
+  }
+}

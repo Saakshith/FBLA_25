@@ -79,7 +79,7 @@
     padding: 1rem;
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    width: 85%;
     transform: scale(1); /* Default scale */
     transition: transform 0.3s ease /* Smooth animation for both scale and shadow */}
 
